@@ -153,13 +153,13 @@ const About = ({ content }: { content: SiteContent }) => {
   const { about } = content.settings;
   const en = content.settings.en?.about;
   return (
-    <section id="about" className="py-32 px-6 bg-white overflow-hidden animate-fade-in">
+    <section id="about" className="py-14 md:py-32 px-6 bg-white overflow-hidden animate-fade-in">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-10 md:mb-20"
         >
           <div className="inline-block px-4 py-2 bg-brand-accent/10 text-brand-accent rounded-full text-sm font-bold uppercase tracking-widest mb-6">
             {pick(lang, about.kicker, en?.kicker)}
@@ -220,7 +220,7 @@ const Impact = ({ content }: { content: SiteContent }) => {
   const en = content.settings.en?.impact;
   const imgAlts = lang === "en" ? ["Vision & Mission", "Mraya logo", "Partnerships", "Contact"] : ["الرؤية والرسالة", "لوجو مرايا", "الشراكات", "التواصل"];
   return (
-    <section className="py-32 px-6 bg-brand-secondary relative overflow-hidden animate-fade-in">
+    <section className="py-14 md:py-32 px-6 bg-brand-secondary relative overflow-hidden animate-fade-in">
       <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
         <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
@@ -277,7 +277,7 @@ const Features = ({ content }: { content: SiteContent }) => {
   const en = content.settings.en?.featuresHead;
   const gradients = ["from-slate-800 to-slate-700", "from-slate-700 to-slate-600"];
   return (
-    <section className="py-32 px-6 bg-gradient-to-b from-white to-slate-50 animate-fade-in relative overflow-hidden">
+    <section className="py-14 md:py-32 px-6 bg-gradient-to-b from-white to-slate-50 animate-fade-in relative overflow-hidden">
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-slate-200 rounded-full blur-3xl opacity-10"></div>
       <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-200 rounded-full blur-3xl opacity-10"></div>
 
@@ -286,7 +286,7 @@ const Features = ({ content }: { content: SiteContent }) => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-24"
+          className="text-center mb-10 md:mb-20"
         >
           <div className="inline-block px-4 py-2 bg-brand-accent/10 text-brand-accent rounded-full text-sm font-bold uppercase tracking-widest mb-6">
             {pick(lang, featuresHead.kicker, en?.kicker)}
@@ -294,7 +294,7 @@ const Features = ({ content }: { content: SiteContent }) => {
           <h2 className="text-5xl md:text-6xl font-arabic font-bold text-brand-dark leading-tight">{pick(lang, featuresHead.title, en?.title)}</h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {content.stats.map((stat, i) => {
             const IconComponent = getIcon(stat.icon);
             return (
@@ -304,7 +304,7 @@ const Features = ({ content }: { content: SiteContent }) => {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
                 whileHover={{ y: -12, transition: { duration: 0.3 } }}
-                className={`group relative bg-gradient-to-br ${gradients[i % 2]} rounded-2xl md:rounded-3xl p-5 md:p-10 shadow-2xl hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 overflow-hidden cursor-pointer`}
+                className={`group relative bg-gradient-to-br ${gradients[i % 2]} rounded-2xl md:rounded-3xl p-4 md:p-10 shadow-2xl hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 overflow-hidden cursor-pointer`}
               >
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl"></div>
@@ -313,20 +313,20 @@ const Features = ({ content }: { content: SiteContent }) => {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                <div className="absolute top-3 left-3 md:top-6 md:left-6 w-10 h-10 md:w-16 md:h-16 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/30 group-hover:bg-white/30 transition-all duration-300">
-                  <span className="text-sm md:text-2xl font-arabic font-bold text-white">{stat.num}</span>
+                <div className="absolute top-3 left-3 md:top-6 md:left-6 w-8 h-8 md:w-16 md:h-16 bg-white/20 rounded-lg md:rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/30 group-hover:bg-white/30 transition-all duration-300">
+                  <span className="text-[10px] md:text-2xl font-arabic font-bold text-white">{stat.num}</span>
                 </div>
 
                 <div className="relative z-10">
-                  <div className="w-12 h-12 md:w-20 md:h-20 bg-white/20 rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-8 group-hover:bg-white/30 transition-all duration-300 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
-                    <IconComponent className="w-6 h-6 md:w-10 md:h-10 text-white drop-shadow-lg" />
+                  <div className="w-9 h-9 md:w-20 md:h-20 bg-white/20 rounded-xl md:rounded-3xl flex items-center justify-center mb-2 md:mb-8 group-hover:bg-white/30 transition-all duration-300 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
+                    <IconComponent className="w-4 h-4 md:w-10 md:h-10 text-white drop-shadow-lg" />
                   </div>
 
-                  <h3 className="text-sm md:text-xl font-arabic font-bold text-white mb-4 md:mb-8 leading-relaxed">{pick(lang, stat.title, stat.titleEn)}</h3>
+                  <h3 className="text-xs md:text-xl font-arabic font-bold text-white mb-2 md:mb-8 leading-relaxed">{pick(lang, stat.title, stat.titleEn)}</h3>
 
-                  <div className="mb-3 md:mb-6">
-                    <div className="text-2xl md:text-6xl font-arabic font-black text-white mb-1 md:mb-2 drop-shadow-lg">{stat.value}+</div>
-                    <div className="text-[11px] md:text-sm text-white/90 font-arabic font-semibold">{pick(lang, stat.subtitle, stat.subtitleEn)}</div>
+                  <div className="mb-2 md:mb-6">
+                    <div className="text-xl md:text-6xl font-arabic font-black text-white mb-0.5 md:mb-2 drop-shadow-lg">{stat.value}+</div>
+                    <div className="text-[10px] md:text-sm text-white/90 font-arabic font-semibold">{pick(lang, stat.subtitle, stat.subtitleEn)}</div>
                   </div>
 
                   <motion.div
@@ -345,7 +345,7 @@ const Features = ({ content }: { content: SiteContent }) => {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="mt-24 text-center"
+          className="mt-10 md:mt-24 text-center"
         >
           <p className="text-2xl md:text-3xl font-arabic italic font-bold text-brand-dark leading-relaxed">{pick(lang, featuresHead.quote, en?.quote)}</p>
         </motion.div>
@@ -359,20 +359,20 @@ const Services = ({ content }: { content: SiteContent }) => {
   const { servicesHead } = content.settings;
   const en = content.settings.en?.servicesHead;
   return (
-    <section id="services" className="py-32 px-6 bg-brand-secondary animate-fade-in-up">
+    <section id="services" className="py-14 md:py-32 px-6 bg-brand-secondary animate-fade-in-up">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-10 md:mb-20"
         >
           <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, servicesHead.kicker, en?.kicker)}</div>
           <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-8">{pick(lang, servicesHead.title, en?.title)}</h2>
           <div className="w-24 h-1.5 bg-brand-accent mx-auto rounded-full"></div>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-10">
           {content.services.map((service, index) => {
             const IconComponent = getIcon(service.icon);
             return (
@@ -383,20 +383,20 @@ const Services = ({ content }: { content: SiteContent }) => {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 group hover:-translate-y-2 transition-all duration-500"
               >
-                <div className="relative h-32 md:h-64 overflow-hidden">
+                <div className="relative h-24 md:h-64 overflow-hidden">
                   <img
                     src={service.img}
                     alt={pick(lang, service.title, service.titleEn)}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-3 right-3 md:top-6 md:right-6 w-9 h-9 md:w-14 md:h-14 bg-white/90 backdrop-blur-md rounded-xl md:rounded-2xl flex items-center justify-center text-brand-accent shadow-lg">
-                    <IconComponent className="w-4 h-4 md:w-6 md:h-6" />
+                  <div className="absolute top-2 right-2 md:top-6 md:right-6 w-7 h-7 md:w-14 md:h-14 bg-white/90 backdrop-blur-md rounded-lg md:rounded-2xl flex items-center justify-center text-brand-accent shadow-lg">
+                    <IconComponent className="w-3.5 h-3.5 md:w-6 md:h-6" />
                   </div>
                 </div>
-                <div className="p-4 md:p-10">
-                  <h3 className="text-sm md:text-2xl font-arabic font-bold mb-2 md:mb-4 text-brand-dark group-hover:text-brand-accent transition-colors">{pick(lang, service.title, service.titleEn)}</h3>
-                  <p className="text-slate-500 leading-relaxed text-[11px] md:text-sm line-clamp-4 md:line-clamp-none">{pick(lang, service.desc, service.descEn)}</p>
+                <div className="p-3 md:p-10">
+                  <h3 className="text-xs md:text-2xl font-arabic font-bold mb-1 md:mb-4 text-brand-dark group-hover:text-brand-accent transition-colors">{pick(lang, service.title, service.titleEn)}</h3>
+                  <p className="text-slate-500 leading-relaxed text-[10px] md:text-sm line-clamp-3 md:line-clamp-none">{pick(lang, service.desc, service.descEn)}</p>
                 </div>
               </motion.div>
             );
@@ -439,9 +439,9 @@ const Team = ({ content }: { content: SiteContent }) => {
   const en = content.settings.en?.teamHead;
   const allCategories = [...TEAM_CATEGORIES, ...content.team.map((m) => m.category).filter((c) => !TEAM_CATEGORIES.includes(c))];
   return (
-    <section id="team" className="py-32 px-6 bg-white">
+    <section id="team" className="py-14 md:py-32 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-32">
+        <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-12 md:mb-32">
           <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, teamHead.kicker, en?.kicker)}</div>
           <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6">{pick(lang, teamHead.title, en?.title)}</h2>
           <p className="text-slate-600 text-lg max-w-2xl mx-auto">{pick(lang, teamHead.text, en?.text)}</p>
@@ -451,7 +451,7 @@ const Team = ({ content }: { content: SiteContent }) => {
           const categoryMembers = content.team.filter((m) => m.category === category);
           if (categoryMembers.length === 0) return null;
           return (
-            <div key={category} className="mb-20">
+            <div key={category} className="mb-10 md:mb-20">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} className="flex items-center gap-4 mb-12">
                 <div className={`px-6 py-3 rounded-full font-bold text-lg font-arabic ${getCategoryBadgeColor(category)}`}>{lang === "en" ? TEAM_CATEGORY_EN[category] ?? category : category}</div>
                 <div className="h-1 flex-1 bg-gradient-to-r from-brand-accent/50 to-transparent rounded-full"></div>
@@ -504,9 +504,9 @@ const News = ({ content }: { content: SiteContent }) => {
 
   return (
     <>
-      <section id="news" className="py-24 px-6 bg-white overflow-hidden">
+      <section id="news" className="py-12 md:py-24 px-6 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-20">
+          <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-10 md:mb-20">
             <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, newsHead.kicker, en?.kicker)}</div>
             <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6">{pick(lang, newsHead.title, en?.title)}</h2>
             <p className="text-slate-600 text-lg">{pick(lang, newsHead.text, en?.text)}</p>
@@ -642,7 +642,7 @@ ${formData.message}
   };
 
   return (
-    <section id="contact" className="py-24 px-6 bg-brand-secondary">
+    <section id="contact" className="py-12 md:py-24 px-6 bg-brand-secondary">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         <div>
           <h2 className="text-4xl md:text-5xl font-arabic font-bold mb-8">{pick(lang, contact.title, en?.title)}</h2>
@@ -808,7 +808,7 @@ const VideoSection = ({ content }: { content: SiteContent }) => {
           </div>
         );
         return (
-          <section key={index} className={`py-24 px-6 ${index % 2 === 0 ? "bg-white" : "bg-brand-secondary"} overflow-hidden`}>
+          <section key={index} className={`py-12 md:py-24 px-6 ${index % 2 === 0 ? "bg-white" : "bg-brand-secondary"} overflow-hidden`}>
             <div className="max-w-7xl mx-auto">
               <div className="grid md:grid-cols-2 gap-16 items-center">
                 {flip ? text : embed}
@@ -833,7 +833,7 @@ const Footer = ({ content }: { content: SiteContent }) => {
   const { footer } = content.settings;
   const en = content.settings.en?.footer;
   return (
-    <footer className="py-20 border-t border-brand-dark/10 bg-brand-warm/30">
+    <footer className="py-10 md:py-20 border-t border-brand-dark/10 bg-brand-warm/30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1">
