@@ -13,11 +13,22 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { SiteContent, TEAM_CATEGORIES } from "@/lib/content";
+import { SiteContent, TEAM_CATEGORIES, TEAM_CATEGORY_EN } from "@/lib/content";
+import { LangProvider, useLang, pick, ui } from "@/lib/lang";
+import { Globe } from "lucide-react";
 import { getIcon } from "@/lib/icons";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { lang, toggle } = useLang();
+  const navLinks: { href: string; key: Parameters<typeof ui>[1] }[] = [
+    { href: "#home", key: "navHome" },
+    { href: "#about", key: "navAbout" },
+    { href: "#services", key: "navServices" },
+    { href: "#team", key: "navTeam" },
+    { href: "#news", key: "navNews" },
+    { href: "#contact", key: "navContact" },
+  ];
 
   return (
     <motion.nav
@@ -34,18 +45,37 @@ const Navbar = () => {
           </div>
         </a>
 
-        <div className="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-arabic font-bold text-slate-600">
-          <a href="#home" className="hover:text-brand-accent transition-colors">الرئيسية</a>
-          <a href="#about" className="hover:text-brand-accent transition-colors">عن المركز</a>
-          <a href="#services" className="hover:text-brand-accent transition-colors">الخدمات</a>
-          <a href="#team" className="hover:text-brand-accent transition-colors">الفريق</a>
-          <a href="#news" className="hover:text-brand-accent transition-colors">الأخبار</a>
-          <a href="#contact" className="hover:text-brand-accent transition-colors">اتصل بنا</a>
+        <div className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest font-arabic font-bold text-slate-600">
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} className="hover:text-brand-accent transition-colors">
+              {ui(lang, l.key)}
+            </a>
+          ))}
+          <button
+            type="button"
+            onClick={toggle}
+            className="flex items-center gap-1.5 border border-slate-300 rounded-full px-3.5 py-1.5 text-xs font-bold text-brand-dark hover:bg-brand-dark hover:text-white hover:border-brand-dark transition-all"
+            aria-label="Switch language"
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span>{lang === "ar" ? "EN" : "عربي"}</span>
+          </button>
         </div>
 
-        <button className="md:hidden text-brand-dark" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            type="button"
+            onClick={toggle}
+            className="flex items-center gap-1.5 border border-slate-300 rounded-full px-3 py-1.5 text-xs font-bold text-brand-dark"
+            aria-label="Switch language"
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span>{lang === "ar" ? "EN" : "عربي"}</span>
+          </button>
+          <button className="text-brand-dark" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X /> : <Menu />}
+          </button>
+        </div>
       </div>
 
       {isOpen && (
@@ -54,12 +84,11 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden bg-white border-b border-slate-200 px-6 py-8 flex flex-col space-y-6 text-center uppercase tracking-widest font-arabic font-bold"
         >
-          <a href="#home" onClick={() => setIsOpen(false)}>الرئيسية</a>
-          <a href="#about" onClick={() => setIsOpen(false)}>عن المركز</a>
-          <a href="#services" onClick={() => setIsOpen(false)}>الخدمات</a>
-          <a href="#team" onClick={() => setIsOpen(false)}>الفريق</a>
-          <a href="#news" onClick={() => setIsOpen(false)}>الأخبار</a>
-          <a href="#contact" onClick={() => setIsOpen(false)}>اتصل بنا</a>
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} onClick={() => setIsOpen(false)}>
+              {ui(lang, l.key)}
+            </a>
+          ))}
         </motion.div>
       )}
     </motion.nav>
