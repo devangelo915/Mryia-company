@@ -17,7 +17,10 @@ type Status = { db: boolean; auth: boolean; loggedIn: boolean; email: string | n
 type AnyItem = StatItem | ServiceItem | TeamMember | NewsItem;
 
 const inputCls =
-  "w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm shadow-sm focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10 transition-all outline-none placeholder:text-slate-300";
+  "w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm shadow-sm focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/15 transition-all outline-none placeholder:text-slate-300";
+
+const THEATER_IMG =
+  "https://images.unsplash.com/photo-1507924538820-ede94a04019d?w=1600&q=80&auto=format&fit=crop";
 const labelCls = "block text-xs font-bold text-slate-500 mb-1.5";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -151,7 +154,7 @@ function SaveButton({ onSave, saving, saved }: { onSave: () => void; saving: boo
         type="button"
         onClick={onSave}
         disabled={saving}
-        className="bg-brand-dark text-white font-bold px-10 py-3 rounded-xl hover:bg-slate-800 active:scale-[0.98] transition-all shadow-md hover:shadow-lg disabled:opacity-50"
+        className="bg-gradient-to-l from-brand-gold to-brand-gold-deep text-brand-charcoal font-bold px-10 py-3 rounded-xl hover:brightness-105 active:scale-[0.98] transition-all shadow-md shadow-brand-gold/25 hover:shadow-lg hover:shadow-brand-gold/30 disabled:opacity-50"
       >
         {saving ? "جاري الحفظ..." : "حفظ التعديلات"}
       </button>
@@ -162,10 +165,13 @@ function SaveButton({ onSave, saving, saved }: { onSave: () => void; saving: boo
 
 function SectionCard({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-6 md:p-8 space-y-5">
-      <div className="border-r-4 border-brand-dark pr-3">
-        <h2 className="text-xl font-arabic font-bold text-brand-dark">{title}</h2>
-        {hint && <p className="text-xs text-slate-500 mt-1">{hint}</p>}
+    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-6 md:p-8 space-y-5 animate-fade-in-up">
+      <div className="flex items-center gap-3">
+        <span className="w-1.5 h-8 rounded-full bg-gradient-to-b from-brand-gold to-brand-gold-deep shrink-0" />
+        <div>
+          <h2 className="text-xl font-arabic font-bold text-brand-dark">{title}</h2>
+          {hint && <p className="text-xs text-slate-500 mt-1">{hint}</p>}
+        </div>
       </div>
       {children}
     </div>
@@ -311,12 +317,18 @@ function ItemsEditor({
           <button
             type="button"
             onClick={startNew}
-            className="bg-brand-dark text-white font-bold px-5 py-2.5 rounded-xl hover:bg-slate-700 transition-colors text-sm"
+            className="bg-brand-charcoal text-brand-gold font-bold px-5 py-2.5 rounded-xl hover:bg-black transition-colors text-sm shadow-sm"
           >
             + إضافة جديد
           </button>
           <div className="divide-y divide-slate-100 border border-slate-200 rounded-2xl overflow-hidden">
-            {items.length === 0 && <div className="p-6 text-sm text-slate-500 text-center">لا يوجد عناصر بعد</div>}
+            {items.length === 0 && (
+              <div className="p-10 text-center space-y-2 bg-gradient-to-b from-brand-gold-soft/40 to-transparent">
+                <div className="text-2xl">🎭</div>
+                <div className="text-sm font-bold text-brand-dark">لا توجد عناصر بعد</div>
+                <div className="text-xs text-slate-400">ابدأ بإضافة أول عنصر من الزر بالأعلى</div>
+              </div>
+            )}
             {items.map((item) => {
               const id = (item as { id: string }).id;
               const img = itemImage?.(item);
@@ -437,15 +449,19 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
   };
 
   return (
-    <div className="min-h-screen bg-brand-secondary flex items-center justify-center p-4 md:p-8">
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden grid md:grid-cols-2">
+    <div className="min-h-screen bg-brand-charcoal flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+      {/* soft gold glow */}
+      <div className="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-brand-gold/15 blur-[140px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-brand-gold/10 blur-[140px]" />
+      <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl shadow-black/40 overflow-hidden grid md:grid-cols-2 animate-scale-in">
         {/* decorative panel */}
-        <div className="relative hidden md:block min-h-[420px]">
-          <img src="/img/mryaya.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25" />
+        <div className="relative hidden md:block min-h-[460px]">
+          <img src={THEATER_IMG} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal via-brand-charcoal/40 to-brand-charcoal/10" />
           <div className="relative h-full flex flex-col justify-end p-8 text-white">
+            <div className="text-brand-gold text-xs font-bold tracking-widest mb-2">مركز مرايا للفنون</div>
             <div className="text-3xl font-arabic font-bold mb-2">مرايا</div>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-white/75 leading-relaxed">
               لوحة تحكم محتوى موقع مركز مرايا للفنون. عدّل النصوص والصور والفريق والأخبار من مكان واحد، وتظهر التعديلات على الموقع فوراً.
             </p>
           </div>
@@ -453,8 +469,9 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
         {/* form panel */}
         <div className="p-8 md:p-10 flex flex-col justify-center">
           <div className="text-center mb-8">
-            <div className="text-3xl font-arabic font-bold text-brand-accent mb-2 md:hidden">مرايا</div>
+            <div className="text-3xl font-arabic font-bold text-brand-gold mb-2 md:hidden">مرايا</div>
             <h1 className="text-lg font-bold text-brand-dark">لوحة التحكم</h1>
+            <div className="w-10 h-0.5 bg-gradient-to-l from-brand-gold to-brand-gold-deep rounded-full mx-auto my-3" />
             <p className="text-xs text-slate-400 font-bold mt-1">سجّل دخولك لإدارة محتوى الموقع</p>
           </div>
           <form onSubmit={submit} className="space-y-5">
@@ -468,7 +485,7 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
             <button
               type="submit"
               disabled={busy}
-              className="w-full bg-brand-dark text-white font-bold py-3.5 rounded-xl hover:bg-slate-700 transition-colors disabled:opacity-50"
+              className="w-full bg-gradient-to-l from-brand-gold to-brand-gold-deep text-brand-charcoal font-bold py-3.5 rounded-xl hover:brightness-105 active:scale-[0.98] transition-all shadow-md shadow-brand-gold/25 disabled:opacity-50"
             >
               {busy ? "جاري الدخول..." : "تسجيل الدخول"}
             </button>
@@ -678,11 +695,11 @@ export default function AdminApp() {
   return (
     <div className="min-h-screen bg-brand-secondary lg:flex">
       {/* mobile top bar */}
-      <div className="lg:hidden bg-brand-dark text-white px-4 py-3 flex items-center justify-between sticky top-0 z-40">
-        <button type="button" onClick={() => setNavOpen(true)} aria-label="فتح القائمة" className="p-2 -mr-2 text-white/80 hover:text-white">
+      <div className="lg:hidden bg-brand-charcoal text-white px-4 py-3 flex items-center justify-between sticky top-0 z-40 border-b border-brand-gold/20">
+        <button type="button" onClick={() => setNavOpen(true)} aria-label="فتح القائمة" className="p-2 -mr-2 text-brand-gold hover:text-brand-gold-soft">
           <NavIcon d={ICONS.menu} className="w-6 h-6" />
         </button>
-        <span className="text-lg font-arabic font-bold">مرايا</span>
+        <span className="text-lg font-arabic font-bold text-brand-gold">مرايا</span>
         <a href="/" target="_blank" className="text-xs font-bold text-white/70 hover:text-white">
           عرض الموقع ↗
         </a>
@@ -693,19 +710,20 @@ export default function AdminApp() {
 
       {/* sidebar */}
       <aside
-        className={`fixed inset-y-0 right-0 z-50 w-72 bg-brand-dark text-white flex flex-col transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:z-auto lg:shrink-0 lg:translate-x-0 ${
+        className={`fixed inset-y-0 right-0 z-50 w-72 bg-gradient-to-b from-[#201b10] via-brand-charcoal to-brand-charcoal text-white flex flex-col transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:z-auto lg:shrink-0 lg:translate-x-0 ${
           navOpen ? "translate-x-0 shadow-2xl" : "translate-x-full"
         }`}
       >
-        <div className="p-6 border-b border-white/10 flex items-start justify-between">
+        <div className="p-6 pb-5 flex items-start justify-between">
           <div>
-            <div className="text-2xl font-arabic font-bold tracking-tight">مرايا</div>
-            <div className="text-[11px] text-white/50 font-bold mt-1">لوحة تحكم المحتوى</div>
+            <div className="text-2xl font-arabic font-bold tracking-tight text-brand-gold">مرايا</div>
+            <div className="text-[11px] text-white/45 font-bold mt-1">لوحة تحكم المحتوى</div>
           </div>
           <button type="button" onClick={() => setNavOpen(false)} aria-label="إغلاق القائمة" className="lg:hidden p-1 text-white/60 hover:text-white">
             <NavIcon d={ICONS.close} className="w-5 h-5" />
           </button>
         </div>
+        <div className="mx-6 h-px bg-gradient-to-l from-transparent via-brand-gold/60 to-transparent" />
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
           {SECTIONS.map((s) => (
             <button
@@ -715,8 +733,10 @@ export default function AdminApp() {
                 setSection(s.id);
                 setNavOpen(false);
               }}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors ${
-                section === s.id ? "bg-white text-brand-dark shadow" : "text-white/60 hover:text-white hover:bg-white/10"
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
+                section === s.id
+                  ? "bg-gradient-to-l from-brand-gold to-brand-gold-deep text-brand-charcoal shadow-lg shadow-brand-gold/20"
+                  : "text-white/55 hover:text-brand-gold-soft hover:bg-white/5"
               }`}
             >
               <NavIcon d={s.icon} className="w-5 h-5 shrink-0" />
@@ -726,14 +746,14 @@ export default function AdminApp() {
         </nav>
         <div className="p-3 border-t border-white/10 space-y-1">
           {status.email && (
-            <div className="px-4 py-1.5 text-[11px] text-white/40 font-bold truncate" dir="ltr">
+            <div className="px-4 py-1.5 text-[11px] text-brand-gold/70 font-bold truncate" dir="ltr">
               {status.email}
             </div>
           )}
           <a
             href="/"
             target="_blank"
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-white/55 hover:text-brand-gold-soft hover:bg-white/5 transition-colors"
           >
             <NavIcon d={ICONS.external} className="w-5 h-5 shrink-0" />
             عرض الموقع
@@ -741,7 +761,7 @@ export default function AdminApp() {
           <button
             type="button"
             onClick={logout}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-white/55 hover:text-brand-gold-soft hover:bg-white/5 transition-colors"
           >
             <NavIcon d={ICONS.logout} className="w-5 h-5 shrink-0" />
             تسجيل الخروج
@@ -754,7 +774,7 @@ export default function AdminApp() {
         <div className="hidden lg:flex items-center justify-between bg-white/80 backdrop-blur border-b border-slate-200 px-8 py-4 sticky top-0 z-30">
           <div>
             <h1 className="text-lg font-bold text-brand-dark">{currentLabel}</h1>
-            <p className="text-[11px] text-slate-400 font-bold mt-0.5">لوحة تحكم مرايا</p>
+            <div className="w-8 h-0.5 bg-gradient-to-l from-brand-gold to-brand-gold-deep rounded-full mt-1.5" />
           </div>
           <a href="/" target="_blank" className="text-xs font-bold text-slate-500 hover:text-brand-dark transition-colors">
             عرض الموقع ↗
@@ -763,30 +783,53 @@ export default function AdminApp() {
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 space-y-6">
         {section === "home" && (
           <>
-            <SectionCard title="أهلاً بك في لوحة تحكم مرايا">
-              <p className="text-sm text-slate-600 leading-relaxed">
-                من هنا تقدر تتحكم في كل محتوى الموقع: الفريق، الإنجازات والأرقام، الأخبار، الخدمات، الفيديوهات، وكل النصوص والصور والروابط. أي تعديل تحفظه
-                يظهر على الموقع مباشرة.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-                {[
-                  { label: "أعضاء الفريق", count: content.team.length },
-                  { label: "الخدمات", count: content.services.length },
-                  { label: "الأخبار", count: content.news.length },
-                  { label: "إحصائيات الإنتاج", count: content.stats.length },
-                ].map((c) => (
-                  <div key={c.label} className="bg-slate-50 rounded-2xl p-4 text-center border border-slate-100">
-                    <div className="text-3xl font-bold text-brand-dark">{c.count}</div>
-                    <div className="text-xs text-slate-500 font-bold mt-1">{c.label}</div>
-                  </div>
-                ))}
+            {/* theater welcome card */}
+            <div className="relative rounded-3xl overflow-hidden shadow-xl animate-fade-in-up">
+              <img src={THEATER_IMG} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-l from-brand-charcoal/95 via-brand-charcoal/70 to-brand-charcoal/30" />
+              <div className="relative p-8 md:p-10 text-white">
+                <div className="text-brand-gold text-[11px] font-bold tracking-[0.2em] mb-3">مركز مرايا للفنون</div>
+                <h2 className="text-2xl md:text-3xl font-arabic font-bold mb-3">أهلاً بك في لوحة تحكم مرايا</h2>
+                <p className="text-sm text-white/75 leading-relaxed max-w-lg">
+                  من هنا تقدر تتحكم في كل محتوى الموقع: الفريق، الإنجازات والأرقام، الأخبار، الخدمات، الفيديوهات، وكل النصوص والصور والروابط. أي تعديل
+                  تحفظه يظهر على الموقع مباشرة.
+                </p>
               </div>
-            </SectionCard>
+            </div>
+
+            {/* stat cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { label: "أعضاء الفريق", count: content.team.length, icon: ICONS.team, cls: "bg-gradient-to-br from-brand-gold to-brand-gold-deep text-brand-charcoal", iconCls: "bg-brand-charcoal/15 text-brand-charcoal" },
+                { label: "الخدمات", count: content.services.length, icon: ICONS.services, cls: "bg-brand-charcoal text-white", iconCls: "bg-brand-gold/20 text-brand-gold" },
+                { label: "الأخبار", count: content.news.length, icon: ICONS.news, cls: "bg-white text-brand-dark border border-slate-200/80", iconCls: "bg-brand-gold-soft text-brand-gold-deep" },
+                { label: "إحصائيات الإنتاج", count: content.stats.length, icon: ICONS.stats, cls: "bg-white text-brand-dark border border-slate-200/80", iconCls: "bg-brand-charcoal/5 text-brand-charcoal" },
+              ].map((c) => (
+                <div
+                  key={c.label}
+                  className={`rounded-2xl p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${c.cls}`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${c.iconCls}`}>
+                    <NavIcon d={c.icon} className="w-5 h-5" />
+                  </div>
+                  <div className="text-3xl font-bold">{c.count}</div>
+                  <div className="text-xs font-bold mt-1 opacity-70">{c.label}</div>
+                </div>
+              ))}
+            </div>
+
             <SectionCard title="ملاحظات مهمة">
-              <ul className="text-sm text-slate-600 leading-relaxed list-disc pr-5 space-y-2">
-                <li>التعديلات تظهر على الموقع فور الضغط على حفظ.</li>
-                <li>في قسم الأخبار: حقل التاريخ اختياري، لو كتبت تاريخ هيظهر على الخبر في الموقع.</li>
-                <li>تقدر ترفع صور جديدة من جهازك في أي حقل صورة.</li>
+              <ul className="text-sm text-slate-600 leading-relaxed space-y-2.5">
+                {[
+                  "التعديلات تظهر على الموقع فور الضغط على حفظ.",
+                  "في قسم الأخبار: حقل التاريخ اختياري، لو كتبت تاريخ هيظهر على الخبر في الموقع.",
+                  "تقدر ترفع صور جديدة من جهازك في أي حقل صورة.",
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-2 shrink-0" />
+                    {t}
+                  </li>
+                ))}
               </ul>
             </SectionCard>
           </>
