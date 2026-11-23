@@ -437,28 +437,43 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
   };
 
   return (
-    <div className="min-h-screen bg-brand-secondary flex items-center justify-center px-6">
-      <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-10 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="text-3xl font-arabic font-bold text-brand-accent mb-2">مرايا</div>
-          <h1 className="text-lg font-bold text-brand-dark">لوحة التحكم</h1>
+    <div className="min-h-screen bg-brand-secondary flex items-center justify-center p-4 md:p-8">
+      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden grid md:grid-cols-2">
+        {/* decorative panel */}
+        <div className="relative hidden md:block min-h-[420px]">
+          <img src="/img/mryaya.jpg" alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/25" />
+          <div className="relative h-full flex flex-col justify-end p-8 text-white">
+            <div className="text-3xl font-arabic font-bold mb-2">مرايا</div>
+            <p className="text-sm text-white/80 leading-relaxed">
+              لوحة تحكم محتوى موقع مركز مرايا للفنون. عدّل النصوص والصور والفريق والأخبار من مكان واحد، وتظهر التعديلات على الموقع فوراً.
+            </p>
+          </div>
         </div>
-        <form onSubmit={submit} className="space-y-5">
-          <Field label="البريد الإلكتروني">
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputCls} dir="ltr" />
-          </Field>
-          <Field label="كلمة المرور">
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputCls} dir="ltr" />
-          </Field>
-          {err && <div className="text-sm text-red-600 font-bold">{err}</div>}
-          <button
-            type="submit"
-            disabled={busy}
-            className="w-full bg-brand-dark text-white font-bold py-3.5 rounded-xl hover:bg-slate-700 transition-colors disabled:opacity-50"
-          >
-            {busy ? "جاري الدخول..." : "تسجيل الدخول"}
-          </button>
-        </form>
+        {/* form panel */}
+        <div className="p-8 md:p-10 flex flex-col justify-center">
+          <div className="text-center mb-8">
+            <div className="text-3xl font-arabic font-bold text-brand-accent mb-2 md:hidden">مرايا</div>
+            <h1 className="text-lg font-bold text-brand-dark">لوحة التحكم</h1>
+            <p className="text-xs text-slate-400 font-bold mt-1">سجّل دخولك لإدارة محتوى الموقع</p>
+          </div>
+          <form onSubmit={submit} className="space-y-5">
+            <Field label="البريد الإلكتروني">
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className={inputCls} dir="ltr" />
+            </Field>
+            <Field label="كلمة المرور">
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className={inputCls} dir="ltr" />
+            </Field>
+            {err && <div className="text-sm text-red-600 font-bold">{err}</div>}
+            <button
+              type="submit"
+              disabled={busy}
+              className="w-full bg-brand-dark text-white font-bold py-3.5 rounded-xl hover:bg-slate-700 transition-colors disabled:opacity-50"
+            >
+              {busy ? "جاري الدخول..." : "تسجيل الدخول"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
@@ -466,20 +481,48 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
 
 // ---------- main app ----------
 
+function NavIcon({ d, className = "w-5 h-5" }: { d: string; className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d={d} />
+    </svg>
+  );
+}
+
+const ICONS = {
+  home: "M3 10.5 12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5",
+  hero: "M4 5h16v14H4zM4 10h16",
+  about: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 8h.01M12 12v4",
+  impact: "M4 20V10m5 10V4m5 16v-7m5 7V7",
+  stats: "M4 20h16M7 16v-5m5 5V8m5 8v-3",
+  services: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
+  team: "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20c0-3 2.7-5 6-5s6 2 6 5M16 5.5a3 3 0 0 1 0 5.5M17.5 15.4c2 .6 3.5 2.1 3.5 4.6",
+  news: "M4 5h13v14H6a2 2 0 0 1-2-2zM17 8h3v9a2 2 0 0 1-2 2M8 9h5M8 13h5",
+  videos: "M4 6h16v12H4zM10 9.5l5 2.5-5 2.5z",
+  heads: "M5 6h14M12 6v12",
+  contact: "M4 6h16v12H4zM4 7.5l8 5.5 8-5.5",
+  footer: "M4 5h16v14H4zM4 15h16",
+  account: "M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 20c0-3.3 2.7-6 6-6s6 2.7 6 6",
+  external: "M14 4h6v6M20 4 10 14M9 5H5a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1v-4",
+  logout: "M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3",
+  menu: "M4 6h16M4 12h16M4 18h16",
+  close: "M6 6l12 12M18 6 6 18",
+};
+
 const SECTIONS = [
-  { id: "home", label: "الرئيسية" },
-  { id: "hero", label: "الواجهة الرئيسية" },
-  { id: "about", label: "عن المركز" },
-  { id: "impact", label: "إحصائيات الأداء" },
-  { id: "stats", label: "إحصائيات الإنتاج" },
-  { id: "services", label: "الخدمات" },
-  { id: "team", label: "الفريق" },
-  { id: "news", label: "الأخبار" },
-  { id: "videos", label: "الفيديوهات" },
-  { id: "heads", label: "عناوين الأقسام" },
-  { id: "contact", label: "التواصل والسوشيال" },
-  { id: "footer", label: "التذييل" },
-  { id: "account", label: "الحساب" },
+  { id: "home", label: "الرئيسية", icon: ICONS.home },
+  { id: "hero", label: "الواجهة الرئيسية", icon: ICONS.hero },
+  { id: "about", label: "عن المركز", icon: ICONS.about },
+  { id: "impact", label: "إحصائيات الأداء", icon: ICONS.impact },
+  { id: "stats", label: "إحصائيات الإنتاج", icon: ICONS.stats },
+  { id: "services", label: "الخدمات", icon: ICONS.services },
+  { id: "team", label: "الفريق", icon: ICONS.team },
+  { id: "news", label: "الأخبار", icon: ICONS.news },
+  { id: "videos", label: "الفيديوهات", icon: ICONS.videos },
+  { id: "heads", label: "عناوين الأقسام", icon: ICONS.heads },
+  { id: "contact", label: "التواصل والسوشيال", icon: ICONS.contact },
+  { id: "footer", label: "التذييل", icon: ICONS.footer },
+  { id: "account", label: "الحساب", icon: ICONS.account },
 ];
 
 export default function AdminApp() {
@@ -487,6 +530,7 @@ export default function AdminApp() {
   const [content, setContent] = useState<SiteContent | null>(null);
   const [settings, setSettings] = useState<Settings | null>(null);
   const [section, setSection] = useState("home");
+  const [navOpen, setNavOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [loadErr, setLoadErr] = useState("");
@@ -629,43 +673,94 @@ export default function AdminApp() {
   const upd = (patch: Partial<Settings>) => setSettings({ ...settings, ...patch });
   const enUpd = <K extends keyof SettingsEn>(key: K, val: SettingsEn[K]) => upd({ en: { ...(settings.en ?? {}), [key]: val } });
 
+  const currentLabel = SECTIONS.find((s) => s.id === section)?.label ?? "";
+
   return (
-    <div className="min-h-screen bg-brand-secondary">
-      {/* top bar */}
-      <div className="bg-brand-dark text-white px-6 py-4 flex items-center justify-between sticky top-0 z-40">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-arabic font-bold tracking-tight">مرايا</span>
-          <span className="text-[11px] font-bold text-white/80 bg-white/10 border border-white/15 rounded-full px-3 py-1">لوحة التحكم</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <a href="/" target="_blank" className="text-xs font-bold text-white/70 hover:text-white transition-colors">
-            عرض الموقع ↗
-          </a>
-          <button type="button" onClick={logout} className="text-xs font-bold text-white/70 hover:text-white transition-colors">
-            تسجيل الخروج
-          </button>
-        </div>
+    <div className="min-h-screen bg-brand-secondary lg:flex">
+      {/* mobile top bar */}
+      <div className="lg:hidden bg-brand-dark text-white px-4 py-3 flex items-center justify-between sticky top-0 z-40">
+        <button type="button" onClick={() => setNavOpen(true)} aria-label="فتح القائمة" className="p-2 -mr-2 text-white/80 hover:text-white">
+          <NavIcon d={ICONS.menu} className="w-6 h-6" />
+        </button>
+        <span className="text-lg font-arabic font-bold">مرايا</span>
+        <a href="/" target="_blank" className="text-xs font-bold text-white/70 hover:text-white">
+          عرض الموقع ↗
+        </a>
       </div>
 
-      {/* section nav */}
-      <div className="bg-white border-b border-slate-200 sticky top-[60px] z-30">
-        <div className="flex overflow-x-auto px-4 gap-1" style={{ scrollbarWidth: "none" }}>
+      {/* backdrop for mobile sidebar */}
+      {navOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setNavOpen(false)} />}
+
+      {/* sidebar */}
+      <aside
+        className={`fixed inset-y-0 right-0 z-50 w-72 bg-brand-dark text-white flex flex-col transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:z-auto lg:shrink-0 lg:translate-x-0 ${
+          navOpen ? "translate-x-0 shadow-2xl" : "translate-x-full"
+        }`}
+      >
+        <div className="p-6 border-b border-white/10 flex items-start justify-between">
+          <div>
+            <div className="text-2xl font-arabic font-bold tracking-tight">مرايا</div>
+            <div className="text-[11px] text-white/50 font-bold mt-1">لوحة تحكم المحتوى</div>
+          </div>
+          <button type="button" onClick={() => setNavOpen(false)} aria-label="إغلاق القائمة" className="lg:hidden p-1 text-white/60 hover:text-white">
+            <NavIcon d={ICONS.close} className="w-5 h-5" />
+          </button>
+        </div>
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               type="button"
-              onClick={() => setSection(s.id)}
-              className={`whitespace-nowrap px-4 py-3.5 text-sm font-bold border-b-2 transition-colors ${
-                section === s.id ? "border-brand-dark text-brand-dark" : "border-transparent text-slate-400 hover:text-brand-dark"
+              onClick={() => {
+                setSection(s.id);
+                setNavOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                section === s.id ? "bg-white text-brand-dark shadow" : "text-white/60 hover:text-white hover:bg-white/10"
               }`}
             >
+              <NavIcon d={s.icon} className="w-5 h-5 shrink-0" />
               {s.label}
             </button>
           ))}
+        </nav>
+        <div className="p-3 border-t border-white/10 space-y-1">
+          {status.email && (
+            <div className="px-4 py-1.5 text-[11px] text-white/40 font-bold truncate" dir="ltr">
+              {status.email}
+            </div>
+          )}
+          <a
+            href="/"
+            target="_blank"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <NavIcon d={ICONS.external} className="w-5 h-5 shrink-0" />
+            عرض الموقع
+          </a>
+          <button
+            type="button"
+            onClick={logout}
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <NavIcon d={ICONS.logout} className="w-5 h-5 shrink-0" />
+            تسجيل الخروج
+          </button>
         </div>
-      </div>
+      </aside>
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 space-y-6">
+      {/* main */}
+      <main className="flex-1 min-w-0">
+        <div className="hidden lg:flex items-center justify-between bg-white/80 backdrop-blur border-b border-slate-200 px-8 py-4 sticky top-0 z-30">
+          <div>
+            <h1 className="text-lg font-bold text-brand-dark">{currentLabel}</h1>
+            <p className="text-[11px] text-slate-400 font-bold mt-0.5">لوحة تحكم مرايا</p>
+          </div>
+          <a href="/" target="_blank" className="text-xs font-bold text-slate-500 hover:text-brand-dark transition-colors">
+            عرض الموقع ↗
+          </a>
+        </div>
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 space-y-6">
         {section === "home" && (
           <>
             <SectionCard title="أهلاً بك في لوحة تحكم مرايا">
@@ -1265,7 +1360,8 @@ export default function AdminApp() {
             </form>
           </SectionCard>
         )}
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
