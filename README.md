@@ -1,115 +1,30 @@
-# 🎨 مرايا — مركز الفن الإبداعي
+# مركز مرايا للفنون — Mryia Company Website
 
-<div align="center">
+Next.js site for Mryia Art Centre with a full admin dashboard (Arabic, RTL).
 
-![مرايا للفنون](./img/mryaya.jpg)
+## Structure
 
-**منصة رقمية احترافية تجمع بين الفن والتكنولوجيا لتقديم تجربة إبداعية فريدة**
+- `src/app/page.tsx` — public site; reads content from MongoDB, falls back to the built-in seed content (`src/lib/content.ts`) when no database is configured, so the site always works.
+- `src/app/admin` + `src/components/admin/AdminApp.tsx` — the dashboard at `/admin`: edit, add, and delete everything the site shows (hero, about, stats, services, team, news, videos, contact, socials, footer) plus account settings (admin email + password change).
+- `src/app/api/admin/*` — dashboard APIs (session auth via signed cookie).
+- `src/app/api/files/[id]` — serves images uploaded from the dashboard (stored in MongoDB GridFS).
 
-[![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=flat-square&logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=flat-square&logo=vite)](https://vitejs.dev)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+## Environment variables
 
-[🚀 تشغيل المشروع](#-كيفية-التشغيل) • [✨ الميزات](#-الميزات-الرئيسية) • [📞 التواصل](#-التواصل-والدعم)
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `MONGODB_URI` | for the dashboard | MongoDB connection string (free Atlas M0 works) |
+| `ADMIN_PASSWORD` | first deploy | Initial admin password; the admin account (`admin@mraya-konda.com`) is seeded into the DB on first boot and is managed from the dashboard afterwards |
+| `MONGODB_DB_NAME` | optional | Defaults to `mryia` |
+| `ADMIN_EMAIL` | optional | Overrides the seeded admin email |
+| `SESSION_SECRET` | optional | Session signing secret (derived from `MONGODB_URI` when unset) |
 
-</div>
+Without `MONGODB_URI` the site runs normally on the seed content and `/admin` shows a "coming soon" state.
 
----
-
-
-# مرايا — مركز الفن الإبداعي
-
-نبذة
------
-
-مرايا هو موقع رسمي رقمي لمركز مرايا للفنون بالمنيا. يهدف المشروع إلى عرض الأعمال الفنية، تنظيم الفعاليات وورش العمل، وربط الجمهور بالفنانين عبر واجهة احترافية ومتجاوبة.
-
-لمحة سريعة
------------
-
-- واجهة عربية متوافقة مع الكتابة من اليمين إلى اليسار (RTL).
-- تصميم استجابي يعمل على الهواتف والحواسب.
-- معرض صور وفيديوهات مع دعم تضمين وسائط خارجية.
-- صفحات للفعاليات، الخدمات، الفريق، والأخبار.
-
-التقنيات المستخدمة
--------------------
-
-- React + TypeScript
-- Vite
-- Tailwind CSS
-
-المتطلبات
----------
-
-- Node.js 20.x أو أحدث
-- npm أو yarn
-
-التثبيت والتشغيل محلياً
-------------------------
-
-1. استنساخ المستودع:
-
-```bash
-git clone https://github.com/devangelo915/Mryia-company.git
-cd merya
-```
-
-2. تثبيت الاعتمادات:
+## Develop
 
 ```bash
 npm install
-```
-
-3. إعداد متغيرات البيئة (إن وُجدت):
-
-أنشئ ملف `.env.local` في جذر المشروع وضع فيه المفاتيح وسلاسل الاتصال اللازمة.
-
-4. تشغيل خادم التطوير:
-
-```bash
 npm run dev
+npm run build
 ```
-
-أوامر شائعة
--------------
-
-```bash
-npm run dev      # تشغيل خادم التطوير
-npm run build    # بناء نسخة الإنتاج
-npm run preview  # معاينة نسخة الإنتاج محليًا
-npm run lint     # التحقق من TypeScript/القواعد
-```
-
-نصائح للنشر
-------------
-
-- تأكد من وضع المفاتيح الحساسة في `.env.local` وعدم رفعها إلى المستودع.
-- تحقق من إعدادات CORS ومفاتيح خدمات الطرف الثالث قبل النشر.
-
-المساهمة
---------
-
-المساهمات مرحب بها. لفتح مساهمة:
-
-1. فرّع المستودع (`git checkout -b feature/your-feature`).
-2. أضف تغييراتك وارتكبها مع رسالة واضحة.
-3. افتح Pull Request للمراجعة.
-
-الاتصال
--------
-
-- البريد الإلكتروني: androwanakonda@gmail.com
-- واتساب / هاتف: 01010535278
-
-الترخيص
---------
-
-مشروع مرخّص بموجب Apache-2.0.
-
-المطور
--------
-
-Eng. Angluos Rezq — م. انجيلوس رزق
-
