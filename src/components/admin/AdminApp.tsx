@@ -325,8 +325,8 @@ function ItemsEditor({
             {items.length === 0 && (
               <div className="p-10 text-center space-y-2 bg-gradient-to-b from-brand-gold-soft/40 to-transparent">
                 <div className="text-2xl">🎭</div>
-                <div className="text-sm font-bold text-brand-dark">لا توجد عناصر بعد</div>
-                <div className="text-xs text-slate-400">ابدأ بإضافة أول عنصر من الزر بالأعلى</div>
+                <div className="text-sm font-bold text-brand-dark">الخشبة فارغة… بانتظار أول مشهد</div>
+                <div className="text-xs text-slate-400">أضف أول عنصر من الزر بالأعلى وابدأ العرض</div>
               </div>
             )}
             {items.map((item) => {
@@ -462,8 +462,9 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
             <div className="text-brand-gold text-xs font-bold tracking-widest mb-2">مركز مرايا للفنون</div>
             <div className="text-3xl font-arabic font-bold mb-2">مرايا</div>
             <p className="text-sm text-white/75 leading-relaxed">
-              لوحة تحكم محتوى موقع مركز مرايا للفنون. عدّل النصوص والصور والفريق والأخبار من مكان واحد، وتظهر التعديلات على الموقع فوراً.
+              «كلُّ العالم مسرح»… وهذه كواليسه. من هنا يُكتب مشهد مرايا على الموقع: النصوص والصور والفريق والأخبار، وكل ما تحفظه يطلع إلى النور فورًا.
             </p>
+            <p className="text-[11px] text-brand-gold/70 italic mt-3" dir="ltr">"All the world's a stage." — William Shakespeare</p>
           </div>
         </div>
         {/* form panel */}
@@ -472,7 +473,7 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
             <div className="text-3xl font-arabic font-bold text-brand-gold mb-2 md:hidden">مرايا</div>
             <h1 className="text-lg font-bold text-brand-dark">لوحة التحكم</h1>
             <div className="w-10 h-0.5 bg-gradient-to-l from-brand-gold to-brand-gold-deep rounded-full mx-auto my-3" />
-            <p className="text-xs text-slate-400 font-bold mt-1">سجّل دخولك لإدارة محتوى الموقع</p>
+            <p className="text-xs text-slate-400 font-bold mt-1">سجّل دخولك… الستار بين يديك</p>
           </div>
           <form onSubmit={submit} className="space-y-5">
             <Field label="البريد الإلكتروني">
@@ -659,8 +660,8 @@ export default function AdminApp() {
       <div className="min-h-screen bg-brand-secondary flex items-center justify-center px-6">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-10 w-full max-w-md text-center">
           <div className="text-3xl font-arabic font-bold text-brand-accent mb-4">مرايا</div>
-          <h1 className="text-lg font-bold text-brand-dark mb-3">لوحة التحكم غير مفعّلة بعد</h1>
-          <p className="text-sm text-slate-500 leading-relaxed">يتم حالياً تجهيز لوحة التحكم وقاعدة البيانات. الموقع يعمل بشكل طبيعي بمحتواه الحالي.</p>
+          <h1 className="text-lg font-bold text-brand-dark mb-3">الستار لم يُرفع بعد</h1>
+          <p className="text-sm text-slate-500 leading-relaxed">كواليس الموقع ما زالت قيد التجهيز. المسرح يعمل بشكل طبيعي بمحتواه الحالي.</p>
         </div>
       </div>
     );
@@ -682,7 +683,7 @@ export default function AdminApp() {
   if (!content || !settings) {
     return (
       <div className="min-h-screen bg-brand-secondary flex items-center justify-center px-6">
-        <div className="text-slate-400 font-bold">{loadErr || "جاري تحميل المحتوى..."}</div>
+        <div className="text-slate-400 font-bold">{loadErr || "لحظات ويُرفع الستار..."}</div>
       </div>
     );
   }
@@ -717,7 +718,7 @@ export default function AdminApp() {
         <div className="p-6 pb-5 flex items-start justify-between">
           <div>
             <div className="text-2xl font-arabic font-bold tracking-tight text-brand-gold">مرايا</div>
-            <div className="text-[11px] text-white/45 font-bold mt-1">لوحة تحكم المحتوى</div>
+            <div className="text-[11px] text-white/45 font-bold mt-1">كواليس الموقع</div>
           </div>
           <button type="button" onClick={() => setNavOpen(false)} aria-label="إغلاق القائمة" className="lg:hidden p-1 text-white/60 hover:text-white">
             <NavIcon d={ICONS.close} className="w-5 h-5" />
@@ -789,10 +790,9 @@ export default function AdminApp() {
               <div className="absolute inset-0 bg-gradient-to-l from-brand-charcoal/95 via-brand-charcoal/70 to-brand-charcoal/30" />
               <div className="relative p-8 md:p-10 text-white">
                 <div className="text-brand-gold text-[11px] font-bold tracking-[0.2em] mb-3">مركز مرايا للفنون</div>
-                <h2 className="text-2xl md:text-3xl font-arabic font-bold mb-3">أهلاً بك في لوحة تحكم مرايا</h2>
+                <h2 className="text-2xl md:text-3xl font-arabic font-bold mb-3">أهلًا بك في كواليس مرايا</h2>
                 <p className="text-sm text-white/75 leading-relaxed max-w-lg">
-                  من هنا تقدر تتحكم في كل محتوى الموقع: الفريق، الإنجازات والأرقام، الأخبار، الخدمات، الفيديوهات، وكل النصوص والصور والروابط. أي تعديل
-                  تحفظه يظهر على الموقع مباشرة.
+                  من هنا تُروى حكاية الموقع: الفريق والإنجازات والأخبار والخدمات وكل نصٍّ وصورة. ما تحفظه يخرج إلى النور مباشرة.
                 </p>
               </div>
             </div>
@@ -818,16 +818,19 @@ export default function AdminApp() {
               ))}
             </div>
 
-            <SectionCard title="ملاحظات مهمة">
-              <ul className="text-sm text-slate-600 leading-relaxed space-y-2.5">
+            <SectionCard title="من دفتر المسرح">
+              <ul className="text-sm text-slate-600 leading-relaxed space-y-4">
                 {[
-                  "التعديلات تظهر على الموقع فور الضغط على حفظ.",
-                  "في قسم الأخبار: حقل التاريخ اختياري، لو كتبت تاريخ هيظهر على الخبر في الموقع.",
-                  "تقدر ترفع صور جديدة من جهازك في أي حقل صورة.",
-                ].map((t) => (
-                  <li key={t} className="flex items-start gap-2.5">
+                  { ar: "«كلُّ العالم مسرح، وكل الرجال والنساء مجرد لاعبين.»", en: "\"All the world's a stage, and all the men and women merely players.\" — Shakespeare, As You Like It" },
+                  { ar: "«التمثيل أن نُمسك مرآةً أمام الطبيعة.»", en: "\"To hold, as 'twere, the mirror up to nature.\" — Shakespeare, Hamlet" },
+                  { ar: "«نحن من المادة التي تُصنع منها الأحلام.»", en: "\"We are such stuff as dreams are made on.\" — Shakespeare, The Tempest" },
+                ].map((q) => (
+                  <li key={q.en} className="flex items-start gap-2.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-2 shrink-0" />
-                    {t}
+                    <div>
+                      <div className="font-bold text-brand-dark">{q.ar}</div>
+                      <div className="text-[11px] text-slate-400 italic mt-0.5" dir="ltr">{q.en}</div>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -836,7 +839,7 @@ export default function AdminApp() {
         )}
 
         {section === "hero" && (
-          <SectionCard title="الواجهة الرئيسية (أول ما يظهر في الموقع)">
+          <SectionCard title="الواجهة الرئيسية" hint="أول مشهد يراه الجمهور عند دخول الموقع">
             <TextInput label="العنوان الرئيسي" value={settings.hero.title} onChange={(v) => upd({ hero: { ...settings.hero, title: v } })} />
             <TextArea label="النص التعريفي" value={settings.hero.subtitle} onChange={(v) => upd({ hero: { ...settings.hero, subtitle: v } })} rows={4} />
             <ImageField label="صورة الخلفية" value={settings.hero.image} onChange={(v) => upd({ hero: { ...settings.hero, image: v } })} />
@@ -907,7 +910,7 @@ export default function AdminApp() {
         )}
 
         {section === "impact" && (
-          <SectionCard title="إحصائيات الأداء (الأشرطة والصور)">
+          <SectionCard title="إحصائيات الأداء" hint="أشرطة وأرقام تلخّص رحلة المركز على الخشبة">
             <div className="grid md:grid-cols-2 gap-4">
               <TextInput label="الكلمة الصغيرة فوق العنوان" value={settings.impact.kicker} onChange={(v) => upd({ impact: { ...settings.impact, kicker: v } })} />
               <TextInput label="العنوان" value={settings.impact.title} onChange={(v) => upd({ impact: { ...settings.impact, title: v } })} />
@@ -990,8 +993,8 @@ export default function AdminApp() {
         {section === "stats" && (
           <ItemsEditor
             type="stat"
-            title="إحصائيات الإنتاج (الأرقام الستة)"
-            hint="الرقم المسلسل يظهر في الزاوية، والقيمة تظهر كبيرة مع علامة +"
+            title="إحصائيات الإنتاج"
+            hint="أرقامٌ تروي حجم الحكاية"
             items={content.stats}
             fields={[
               { key: "num", label: "الرقم المسلسل (01، 02...)", kind: "text", dir: "ltr" },
@@ -1062,7 +1065,7 @@ export default function AdminApp() {
           <ItemsEditor
             type="news"
             title="الأخبار"
-            hint="التاريخ اختياري: لو كتبته هيظهر على الخبر في الموقع، وسيبه فاضي لو مش عايز تاريخ"
+            hint="التاريخ اختياري: اتركه فارغًا إن أردت خبرًا بلا زمن"
             items={content.news}
             fields={[
               { key: "title", label: "العنوان", kind: "text" },
@@ -1081,7 +1084,7 @@ export default function AdminApp() {
         )}
 
         {section === "videos" && (
-          <SectionCard title="أقسام الفيديو" hint="الفيديو الأول يظهر شمال والتاني يمين بالتبادل">
+          <SectionCard title="أقسام الفيديو" hint="مشهدان يتناوبان على الخشبة: الأول شمالًا والثاني يمينًا بالتبادل">
             {settings.videos.map((video, i) => (
               <div key={i} className="border border-slate-200 rounded-2xl p-5 space-y-4">
                 <h3 className="font-bold text-brand-dark">فيديو {i + 1}</h3>
@@ -1380,7 +1383,7 @@ export default function AdminApp() {
         )}
 
         {section === "account" && (
-          <SectionCard title="بيانات الدخول" hint="من هنا تقدر تغير الإيميل أو كلمة المرور بتاعة لوحة التحكم">
+          <SectionCard title="بيانات الدخول" hint="مفتاح الكواليس: من هنا تغيّر الإيميل أو كلمة المرور">
             <form onSubmit={saveAccount} className="space-y-5">
               <Field label="البريد الإلكتروني">
                 <input type="email" value={accEmail} onChange={(e) => setAccEmail(e.target.value)} required className={inputCls} dir="ltr" />
