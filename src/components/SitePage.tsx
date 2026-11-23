@@ -815,10 +815,10 @@ const Footer = ({ content }: { content: SiteContent }) => {
         </div>
         <div className="pt-10 border-t border-brand-dark/10 flex flex-col md:flex-row items-center justify-between gap-3 text-sm">
           <p className="font-arabic text-brand-dark/50">
-            © {new Date().getFullYear()} {footer.rights ?? "مركز مرايا للفنون. جميع الحقوق محفوظة."}
+            © {new Date().getFullYear()} {footer.rights ?? "مرايا. جميع الحقوق محفوظة."}
           </p>
-          <p className="text-brand-dark/40 tracking-[0.2em] uppercase text-xs font-semibold" dir="ltr">
-            {footer.credit ?? "Developed by HEXA PLUS"}
+          <p className="font-arabic text-brand-dark/40 text-xs">
+            {footer.credit ?? "تصميم وتطوير الموقع بواسطة Hexa Plus"}
           </p>
         </div>
       </div>

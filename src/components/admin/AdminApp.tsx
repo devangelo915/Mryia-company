@@ -991,14 +991,13 @@ export default function AdminApp() {
             <div className="grid md:grid-cols-2 gap-4">
               <TextInput
                 label="سطر الحقوق (يظهر بعد © والسنة)"
-                value={settings.footer.rights ?? "مركز مرايا للفنون. جميع الحقوق محفوظة."}
+                value={settings.footer.rights ?? "مرايا. جميع الحقوق محفوظة."}
                 onChange={(v) => upd({ footer: { ...settings.footer, rights: v } })}
               />
               <TextInput
-                label="سطر التطوير (إنجليزي)"
-                value={settings.footer.credit ?? "Developed by HEXA PLUS"}
+                label="سطر التصميم والتطوير"
+                value={settings.footer.credit ?? "تصميم وتطوير الموقع بواسطة Hexa Plus"}
                 onChange={(v) => upd({ footer: { ...settings.footer, credit: v } })}
-                dir="ltr"
               />
             </div>
             <div className="space-y-3">

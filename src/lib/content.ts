@@ -223,8 +223,8 @@ export const DEFAULT_SETTINGS: Settings = {
   ],
   footer: {
     brand: "مرايا",
-    rights: "مركز مرايا للفنون. جميع الحقوق محفوظة.",
-    credit: "Developed by HEXA PLUS",
+    rights: "مرايا. جميع الحقوق محفوظة.",
+    credit: "تصميم وتطوير الموقع بواسطة Hexa Plus",
     about: "مركز مرايا للفنون هو وجهة إبداعية مكرسة لدعم الفنانين والمصممين، وتوفير بيئة ملهمة للابتكار والتعلم.",
     catalogs: [
       {
