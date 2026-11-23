@@ -16,7 +16,7 @@ type Status = { db: boolean; auth: boolean; loggedIn: boolean; email: string | n
 type AnyItem = StatItem | ServiceItem | TeamMember | NewsItem;
 
 const inputCls =
-  "w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-brand-accent transition-all outline-none";
+  "w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm shadow-sm focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10 transition-all outline-none placeholder:text-slate-300";
 const labelCls = "block text-xs font-bold text-slate-500 mb-1.5";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -139,7 +139,7 @@ function SaveButton({ onSave, saving, saved }: { onSave: () => void; saving: boo
         type="button"
         onClick={onSave}
         disabled={saving}
-        className="bg-brand-dark text-white font-bold px-8 py-3 rounded-xl hover:bg-slate-700 transition-colors disabled:opacity-50"
+        className="bg-brand-dark text-white font-bold px-10 py-3 rounded-xl hover:bg-slate-800 active:scale-[0.98] transition-all shadow-md hover:shadow-lg disabled:opacity-50"
       >
         {saving ? "جاري الحفظ..." : "حفظ التعديلات"}
       </button>
@@ -150,8 +150,8 @@ function SaveButton({ onSave, saving, saved }: { onSave: () => void; saving: boo
 
 function SectionCard({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 space-y-5">
-      <div>
+    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-6 md:p-8 space-y-5">
+      <div className="border-r-4 border-brand-dark pr-3">
         <h2 className="text-xl font-arabic font-bold text-brand-dark">{title}</h2>
         {hint && <p className="text-xs text-slate-500 mt-1">{hint}</p>}
       </div>
@@ -621,8 +621,8 @@ export default function AdminApp() {
       {/* top bar */}
       <div className="bg-brand-dark text-white px-6 py-4 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
-          <span className="text-2xl font-arabic font-bold">مرايا</span>
-          <span className="text-xs text-white/60 font-bold">لوحة التحكم</span>
+          <span className="text-2xl font-arabic font-bold tracking-tight">مرايا</span>
+          <span className="text-[11px] font-bold text-white/80 bg-white/10 border border-white/15 rounded-full px-3 py-1">لوحة التحكم</span>
         </div>
         <div className="flex items-center gap-4">
           <a href="/" target="_blank" className="text-xs font-bold text-white/70 hover:text-white transition-colors">
@@ -988,6 +988,19 @@ export default function AdminApp() {
               <TextInput label="اسم البراند" value={settings.footer.brand} onChange={(v) => upd({ footer: { ...settings.footer, brand: v } })} />
             </div>
             <TextArea label="النص التعريفي" value={settings.footer.about} onChange={(v) => upd({ footer: { ...settings.footer, about: v } })} rows={3} />
+            <div className="grid md:grid-cols-2 gap-4">
+              <TextInput
+                label="سطر الحقوق (يظهر بعد © والسنة)"
+                value={settings.footer.rights ?? "مركز مرايا للفنون. جميع الحقوق محفوظة."}
+                onChange={(v) => upd({ footer: { ...settings.footer, rights: v } })}
+              />
+              <TextInput
+                label="سطر التطوير (إنجليزي)"
+                value={settings.footer.credit ?? "Developed by HEXA PLUS"}
+                onChange={(v) => upd({ footer: { ...settings.footer, credit: v } })}
+                dir="ltr"
+              />
+            </div>
             <div className="space-y-3">
               <label className={labelCls}>الكتالوجات</label>
               {settings.footer.catalogs.map((catalog, i) => (

@@ -109,6 +109,8 @@ export type Settings = {
     about: string;
     catalogs: { label: string; url: string }[];
     socials: SocialLink[];
+    rights: string;
+    credit: string;
   };
   mapEmbedUrl: string;
 };
@@ -221,6 +223,8 @@ export const DEFAULT_SETTINGS: Settings = {
   ],
   footer: {
     brand: "مرايا",
+    rights: "مركز مرايا للفنون. جميع الحقوق محفوظة.",
+    credit: "Developed by HEXA PLUS",
     about: "مركز مرايا للفنون هو وجهة إبداعية مكرسة لدعم الفنانين والمصممين، وتوفير بيئة ملهمة للابتكار والتعلم.",
     catalogs: [
       {

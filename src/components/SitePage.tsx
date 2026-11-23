@@ -813,8 +813,13 @@ const Footer = ({ content }: { content: SiteContent }) => {
             </div>
           </div>
         </div>
-        <div className="pt-12 border-t border-brand-dark/10 text-center text-sm text-brand-dark/40 font-arabic">
-          <p>© {new Date().getFullYear()} مركز مرايا للفنون. جميع الحقوق محفوظة.</p>
+        <div className="pt-10 border-t border-brand-dark/10 flex flex-col md:flex-row items-center justify-between gap-3 text-sm">
+          <p className="font-arabic text-brand-dark/50">
+            © {new Date().getFullYear()} {footer.rights ?? "مركز مرايا للفنون. جميع الحقوق محفوظة."}
+          </p>
+          <p className="text-brand-dark/40 tracking-[0.2em] uppercase text-xs font-semibold" dir="ltr">
+            {footer.credit ?? "Developed by HEXA PLUS"}
+          </p>
         </div>
       </div>
     </footer>
