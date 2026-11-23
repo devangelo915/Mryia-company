@@ -41,7 +41,7 @@ const Navbar = () => {
         <a href="#home" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <img src="/img/mryaya.jpg" alt="مرايا" className="w-12 h-12 rounded-full object-cover shadow-md" />
           <div className="text-3xl font-arabic font-bold tracking-tight text-brand-accent" style={{ fontFamily: "Almarai" }}>
-            مرايا
+            {lang === "ar" ? "مرايا" : "Mraya"}
           </div>
         </a>
 
@@ -96,11 +96,13 @@ const Navbar = () => {
 };
 
 const Hero = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { hero } = content.settings;
+  const en = content.settings.en?.hero;
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-900 animate-fade-in">
       <div className="absolute inset-0 z-0">
-        <img src={hero.image} alt={hero.title} className="w-full h-full object-cover opacity-60" referrerPolicy="no-referrer" />
+        <img src={hero.image} alt={pick(lang, hero.title, en?.title)} className="w-full h-full object-cover opacity-60" referrerPolicy="no-referrer" />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/40 via-brand-dark/20 to-brand-dark/80"></div>
       </div>
 
@@ -111,7 +113,7 @@ const Hero = ({ content }: { content: SiteContent }) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-6xl md:text-8xl font-arabic font-bold leading-tight mb-6 text-white"
         >
-          {hero.title}
+          {pick(lang, hero.title, en?.title)}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -119,7 +121,7 @@ const Hero = ({ content }: { content: SiteContent }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          {hero.subtitle}
+          {pick(lang, hero.subtitle, en?.subtitle)}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -131,14 +133,14 @@ const Hero = ({ content }: { content: SiteContent }) => {
             href={hero.ctaPrimaryHref}
             className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-brand-accent text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-all shadow-lg shadow-brand-accent/25 group"
           >
-            <span>{hero.ctaPrimaryLabel}</span>
+            <span>{pick(lang, hero.ctaPrimaryLabel, en?.ctaPrimaryLabel)}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
             href={hero.ctaSecondaryHref}
             className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-full hover:bg-white/20 transition-all"
           >
-            <span>{hero.ctaSecondaryLabel}</span>
+            <span>{pick(lang, hero.ctaSecondaryLabel, en?.ctaSecondaryLabel)}</span>
           </a>
         </motion.div>
       </div>
@@ -147,7 +149,9 @@ const Hero = ({ content }: { content: SiteContent }) => {
 };
 
 const About = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { about } = content.settings;
+  const en = content.settings.en?.about;
   return (
     <section id="about" className="py-32 px-6 bg-white overflow-hidden animate-fade-in">
       <div className="max-w-7xl mx-auto">
@@ -158,10 +162,10 @@ const About = ({ content }: { content: SiteContent }) => {
           className="text-center mb-20"
         >
           <div className="inline-block px-4 py-2 bg-brand-accent/10 text-brand-accent rounded-full text-sm font-bold uppercase tracking-widest mb-6">
-            {about.kicker}
+            {pick(lang, about.kicker, en?.kicker)}
           </div>
           <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6 text-brand-dark leading-tight" style={{ fontFamily: "Almarai" }}>
-            {about.title}
+            {pick(lang, about.title, en?.title)}
           </h2>
           <div className="w-20 h-1.5 bg-brand-accent mx-auto rounded-full"></div>
         </motion.div>
@@ -175,15 +179,15 @@ const About = ({ content }: { content: SiteContent }) => {
           >
             <div className="space-y-5 text-slate-700 leading-relaxed">
               {about.paragraphs.map((p, i) => (
-                <p key={i} className="text-lg">{p}</p>
+                <p key={i} className="text-lg">{pick(lang, p, en?.paragraphs?.[i])}</p>
               ))}
 
               <div className="bg-brand-accent/5 border-l-4 border-brand-accent rounded-lg p-6 my-8">
-                <p className="text-lg font-bold text-brand-dark mb-3">{about.boxTitle}</p>
-                <p className="text-slate-700 leading-relaxed">{about.boxText}</p>
+                <p className="text-lg font-bold text-brand-dark mb-3">{pick(lang, about.boxTitle, en?.boxTitle)}</p>
+                <p className="text-slate-700 leading-relaxed">{pick(lang, about.boxText, en?.boxText)}</p>
               </div>
 
-              <p className="text-2xl font-arabic italic font-bold text-brand-accent pt-6 leading-relaxed">{about.tagline}</p>
+              <p className="text-2xl font-arabic italic font-bold text-brand-accent pt-6 leading-relaxed">{pick(lang, about.tagline, en?.tagline)}</p>
             </div>
           </motion.div>
 
@@ -196,12 +200,12 @@ const About = ({ content }: { content: SiteContent }) => {
             <div className="absolute -inset-8 bg-brand-accent/10 rounded-[3rem] blur-3xl -z-10"></div>
             <img
               src={about.image}
-              alt={about.title}
+              alt={pick(lang, about.title, en?.title)}
               className="w-full h-auto rounded-[2.5rem] shadow-2xl object-cover hover:shadow-brand-accent/30 transition-all duration-500"
             />
             <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-brand-dark rounded-[2rem] flex flex-col items-center justify-center text-white shadow-2xl z-20 border-4 border-white">
               <span className="text-4xl font-bold mb-2">{about.badgeValue}</span>
-              <span className="text-xs font-arabic text-center px-4 font-bold leading-tight">{about.badgeText}</span>
+              <span className="text-xs font-arabic text-center px-4 font-bold leading-tight">{pick(lang, about.badgeText, en?.badgeText)}</span>
             </div>
           </motion.div>
         </div>
@@ -211,23 +215,25 @@ const About = ({ content }: { content: SiteContent }) => {
 };
 
 const Impact = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { impact } = content.settings;
-  const imgAlts = ["الرؤية والرسالة", "لوجو مرايا", "الشراكات", "التواصل"];
+  const en = content.settings.en?.impact;
+  const imgAlts = lang === "en" ? ["Vision & Mission", "Mraya logo", "Partnerships", "Contact"] : ["الرؤية والرسالة", "لوجو مرايا", "الشراكات", "التواصل"];
   return (
     <section className="py-32 px-6 bg-brand-secondary relative overflow-hidden animate-fade-in">
       <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
         <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <div className="inline-block px-3 py-1 bg-brand-accent/10 text-brand-accent text-xs font-bold uppercase tracking-widest mb-6 rounded-full">
-            {impact.kicker}
+            {pick(lang, impact.kicker, en?.kicker)}
           </div>
-          <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-8 leading-tight">{impact.title}</h2>
-          <p className="text-lg text-slate-600 leading-relaxed mb-12 max-w-xl">{impact.text}</p>
+          <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-8 leading-tight">{pick(lang, impact.title, en?.title)}</h2>
+          <p className="text-lg text-slate-600 leading-relaxed mb-12 max-w-xl">{pick(lang, impact.text, en?.text)}</p>
           <div className="space-y-8">
             {impact.bars.map((stat, i) => (
               <div key={i} className="group">
                 <div className="flex justify-between mb-3 items-end">
-                  <span className="font-bold text-lg text-brand-dark">{stat.label}</span>
+                  <span className="font-bold text-lg text-brand-dark">{pick(lang, stat.label, en?.bars?.[i]?.label)}</span>
                   <span className="text-brand-accent font-mono text-xl font-bold">{stat.value}%</span>
                 </div>
                 <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
@@ -256,7 +262,7 @@ const Impact = ({ content }: { content: SiteContent }) => {
           <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-accent rounded-full flex items-center justify-center text-white shadow-2xl z-20 border-8 border-white">
             <div className="text-center">
               <div className="text-3xl font-bold">{impact.badgeValue}</div>
-              <div className="text-[10px] uppercase font-bold tracking-tighter">{impact.badgeText}</div>
+              <div className="text-[10px] uppercase font-bold tracking-tighter">{pick(lang, impact.badgeText, en?.badgeText)}</div>
             </div>
           </div>
         </div>
@@ -266,7 +272,9 @@ const Impact = ({ content }: { content: SiteContent }) => {
 };
 
 const Features = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { featuresHead } = content.settings;
+  const en = content.settings.en?.featuresHead;
   const gradients = ["from-slate-800 to-slate-700", "from-slate-700 to-slate-600"];
   return (
     <section className="py-32 px-6 bg-gradient-to-b from-white to-slate-50 animate-fade-in relative overflow-hidden">
@@ -281,9 +289,9 @@ const Features = ({ content }: { content: SiteContent }) => {
           className="text-center mb-24"
         >
           <div className="inline-block px-4 py-2 bg-brand-accent/10 text-brand-accent rounded-full text-sm font-bold uppercase tracking-widest mb-6">
-            {featuresHead.kicker}
+            {pick(lang, featuresHead.kicker, en?.kicker)}
           </div>
-          <h2 className="text-5xl md:text-6xl font-arabic font-bold text-brand-dark leading-tight">{featuresHead.title}</h2>
+          <h2 className="text-5xl md:text-6xl font-arabic font-bold text-brand-dark leading-tight">{pick(lang, featuresHead.title, en?.title)}</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -314,11 +322,11 @@ const Features = ({ content }: { content: SiteContent }) => {
                     <IconComponent className="w-10 h-10 text-white drop-shadow-lg" />
                   </div>
 
-                  <h3 className="text-xl font-arabic font-bold text-white mb-8 leading-relaxed">{stat.title}</h3>
+                  <h3 className="text-xl font-arabic font-bold text-white mb-8 leading-relaxed">{pick(lang, stat.title, stat.titleEn)}</h3>
 
                   <div className="mb-6">
                     <div className="text-5xl md:text-6xl font-arabic font-black text-white mb-2 drop-shadow-lg">{stat.value}+</div>
-                    <div className="text-sm text-white/90 font-arabic font-semibold">{stat.subtitle}</div>
+                    <div className="text-sm text-white/90 font-arabic font-semibold">{pick(lang, stat.subtitle, stat.subtitleEn)}</div>
                   </div>
 
                   <motion.div
@@ -339,7 +347,7 @@ const Features = ({ content }: { content: SiteContent }) => {
           transition={{ duration: 0.8 }}
           className="mt-24 text-center"
         >
-          <p className="text-2xl md:text-3xl font-arabic italic font-bold text-brand-dark leading-relaxed">{featuresHead.quote}</p>
+          <p className="text-2xl md:text-3xl font-arabic italic font-bold text-brand-dark leading-relaxed">{pick(lang, featuresHead.quote, en?.quote)}</p>
         </motion.div>
       </div>
     </section>
@@ -347,7 +355,9 @@ const Features = ({ content }: { content: SiteContent }) => {
 };
 
 const Services = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { servicesHead } = content.settings;
+  const en = content.settings.en?.servicesHead;
   return (
     <section id="services" className="py-32 px-6 bg-brand-secondary animate-fade-in-up">
       <div className="max-w-7xl mx-auto">
@@ -357,8 +367,8 @@ const Services = ({ content }: { content: SiteContent }) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{servicesHead.kicker}</div>
-          <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-8">{servicesHead.title}</h2>
+          <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, servicesHead.kicker, en?.kicker)}</div>
+          <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-8">{pick(lang, servicesHead.title, en?.title)}</h2>
           <div className="w-24 h-1.5 bg-brand-accent mx-auto rounded-full"></div>
         </motion.div>
 
@@ -376,7 +386,7 @@ const Services = ({ content }: { content: SiteContent }) => {
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={service.img}
-                    alt={service.title}
+                    alt={pick(lang, service.title, service.titleEn)}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     referrerPolicy="no-referrer"
                   />
@@ -385,8 +395,8 @@ const Services = ({ content }: { content: SiteContent }) => {
                   </div>
                 </div>
                 <div className="p-10">
-                  <h3 className="text-2xl font-arabic font-bold mb-4 text-brand-dark group-hover:text-brand-accent transition-colors">{service.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm">{service.desc}</p>
+                  <h3 className="text-2xl font-arabic font-bold mb-4 text-brand-dark group-hover:text-brand-accent transition-colors">{pick(lang, service.title, service.titleEn)}</h3>
+                  <p className="text-slate-500 leading-relaxed text-sm">{pick(lang, service.desc, service.descEn)}</p>
                 </div>
               </motion.div>
             );
@@ -424,15 +434,17 @@ const getCategoryBadgeColor = (category: string) => {
 };
 
 const Team = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { teamHead } = content.settings;
+  const en = content.settings.en?.teamHead;
   const allCategories = [...TEAM_CATEGORIES, ...content.team.map((m) => m.category).filter((c) => !TEAM_CATEGORIES.includes(c))];
   return (
     <section id="team" className="py-32 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-32">
-          <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{teamHead.kicker}</div>
-          <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6">{teamHead.title}</h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">{teamHead.text}</p>
+          <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, teamHead.kicker, en?.kicker)}</div>
+          <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6">{pick(lang, teamHead.title, en?.title)}</h2>
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto">{pick(lang, teamHead.text, en?.text)}</p>
         </motion.div>
 
         {allCategories.map((category) => {
@@ -441,7 +453,7 @@ const Team = ({ content }: { content: SiteContent }) => {
           return (
             <div key={category} className="mb-20">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} className="flex items-center gap-4 mb-12">
-                <div className={`px-6 py-3 rounded-full font-bold text-lg font-arabic ${getCategoryBadgeColor(category)}`}>{category}</div>
+                <div className={`px-6 py-3 rounded-full font-bold text-lg font-arabic ${getCategoryBadgeColor(category)}`}>{lang === "en" ? TEAM_CATEGORY_EN[category] ?? category : category}</div>
                 <div className="h-1 flex-1 bg-gradient-to-r from-brand-accent/50 to-transparent rounded-full"></div>
               </motion.div>
 
@@ -466,12 +478,12 @@ const Team = ({ content }: { content: SiteContent }) => {
                     </div>
                     <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} className="px-2">
                       <div className="text-brand-accent text-xs font-bold uppercase tracking-widest mb-2 group-hover:text-brand-accent transition-colors">
-                        {member.role}
+                        {pick(lang, member.role, member.roleEn)}
                       </div>
                       <h3 className="text-xl md:text-2xl font-arabic font-bold text-brand-dark mb-3 group-hover:text-brand-accent transition-colors">
-                        {member.name}
+                        {pick(lang, member.name, member.nameEn)}
                       </h3>
-                      <p className="text-slate-500 text-sm leading-relaxed">{member.desc}</p>
+                      <p className="text-slate-500 text-sm leading-relaxed">{pick(lang, member.desc, member.descEn)}</p>
                     </motion.div>
                   </motion.div>
                 ))}
@@ -486,21 +498,23 @@ const Team = ({ content }: { content: SiteContent }) => {
 
 const News = ({ content }: { content: SiteContent }) => {
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
+  const { lang } = useLang();
   const { newsHead } = content.settings;
+  const en = content.settings.en?.newsHead;
 
   return (
     <>
       <section id="news" className="py-24 px-6 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-20">
-            <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{newsHead.kicker}</div>
-            <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6">{newsHead.title}</h2>
-            <p className="text-slate-600 text-lg">{newsHead.text}</p>
+            <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, newsHead.kicker, en?.kicker)}</div>
+            <h2 className="text-5xl md:text-6xl font-arabic font-bold mb-6">{pick(lang, newsHead.title, en?.title)}</h2>
+            <p className="text-slate-600 text-lg">{pick(lang, newsHead.text, en?.text)}</p>
           </motion.div>
 
           <div
             className="news-scroll flex overflow-x-auto gap-8 pb-6 snap-x snap-mandatory"
-            style={{ scrollBehavior: "smooth", direction: "rtl", msOverflowStyle: "none", scrollbarWidth: "none" }}
+            style={{ scrollBehavior: "smooth", direction: lang === "ar" ? "rtl" : "ltr", msOverflowStyle: "none", scrollbarWidth: "none" }}
           >
             {content.news.map((item, index) => (
               <motion.div
@@ -514,7 +528,7 @@ const News = ({ content }: { content: SiteContent }) => {
                   <div className="relative h-44 overflow-hidden bg-slate-200 cursor-pointer" onClick={() => setSelectedImg(item.img)}>
                     <img
                       src={item.img}
-                      alt={item.title}
+                      alt={pick(lang, item.title, item.titleEn)}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       referrerPolicy="no-referrer"
                     />
@@ -528,13 +542,13 @@ const News = ({ content }: { content: SiteContent }) => {
 
                   <div className="p-6 flex flex-col flex-1">
                     <h3 className="text-xl font-arabic font-bold text-brand-dark mb-3 line-clamp-2 group-hover:text-brand-accent transition-colors">
-                      {item.title}
+                      {pick(lang, item.title, item.titleEn)}
                     </h3>
 
-                    <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">{item.desc}</p>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">{pick(lang, item.desc, item.descEn)}</p>
 
                     <button className="text-sm font-bold uppercase tracking-widest text-brand-accent hover:text-brand-dark transition-colors flex items-center space-x-2 group/btn">
-                      <span>اقرأ المزيد</span>
+                      <span>{ui(lang, "readMore")}</span>
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
@@ -544,7 +558,7 @@ const News = ({ content }: { content: SiteContent }) => {
           </div>
 
           <div className="text-center mt-12">
-            <p className="text-slate-500 text-sm">اسحب جانباً لعرض المزيد من الأخبار</p>
+            <p className="text-slate-500 text-sm">{ui(lang, "dragHint")}</p>
           </div>
         </div>
 
@@ -585,7 +599,10 @@ const News = ({ content }: { content: SiteContent }) => {
 };
 
 const Contact = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { contact, socials } = content.settings;
+  const en = content.settings.en?.contact;
+  const enSocials = content.settings.en?.socials;
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -596,7 +613,17 @@ const Contact = ({ content }: { content: SiteContent }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const whatsappMessage = `
+    const whatsappMessage = (lang === "en"
+      ? `
+*Message from the contact form*
+Name: ${formData.name}
+Email: ${formData.email}
+Subject: ${formData.subject}
+
+Message:
+${formData.message}
+      `
+      : `
 *رسالة من نموذج التواصل*
 الاسم: ${formData.name}
 البريد الإلكتروني: ${formData.email}
@@ -604,7 +631,8 @@ const Contact = ({ content }: { content: SiteContent }) => {
 
 الرسالة:
 ${formData.message}
-    `.trim();
+    `
+    ).trim();
 
     const encodedMessage = encodeURIComponent(whatsappMessage);
     window.open(`https://wa.me/${contact.whatsapp}?text=${encodedMessage}`, "_blank");
@@ -616,8 +644,8 @@ ${formData.message}
     <section id="contact" className="py-24 px-6 bg-brand-secondary">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         <div>
-          <h2 className="text-4xl md:text-5xl font-arabic font-bold mb-8">{contact.title}</h2>
-          <p className="text-slate-600 mb-12 leading-relaxed">{contact.text}</p>
+          <h2 className="text-4xl md:text-5xl font-arabic font-bold mb-8">{pick(lang, contact.title, en?.title)}</h2>
+          <p className="text-slate-600 mb-12 leading-relaxed">{pick(lang, contact.text, en?.text)}</p>
 
           <div className="space-y-6">
             <a href={contact.addressUrl} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 group">
@@ -625,8 +653,8 @@ ${formData.message}
                 <MapPin className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold group-hover:text-brand-accent transition-colors">{contact.addressLabel}</span>
-                <span className="text-xs text-slate-500 leading-relaxed">{contact.addressText}</span>
+                <span className="font-bold group-hover:text-brand-accent transition-colors">{pick(lang, contact.addressLabel, en?.addressLabel)}</span>
+                <span className="text-xs text-slate-500 leading-relaxed">{pick(lang, contact.addressText, en?.addressText)}</span>
               </div>
             </a>
             <div className="flex items-center space-x-4">
@@ -639,7 +667,7 @@ ${formData.message}
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-green-600 shadow-sm group-hover:bg-green-600 group-hover:text-white transition-all">
                 <MessageCircle className="w-5 h-5" />
               </div>
-              <span className="group-hover:text-green-600 transition-colors">{contact.whatsappLabel}</span>
+              <span className="group-hover:text-green-600 transition-colors">{pick(lang, contact.whatsappLabel, en?.whatsappLabel)}</span>
             </a>
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-brand-accent shadow-sm">
@@ -652,8 +680,8 @@ ${formData.message}
                 <Clock className="w-5 h-5" />
               </div>
               <div className="text-sm">
-                <div className="font-bold">ساعات العمل:</div>
-                <div>{contact.hours}</div>
+                <div className="font-bold">{ui(lang, "workHours")}</div>
+                <div>{pick(lang, contact.hours, en?.hours)}</div>
               </div>
             </div>
           </div>
@@ -668,7 +696,7 @@ ${formData.message}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 border border-slate-200 rounded-full flex items-center justify-center hover:bg-brand-accent hover:text-white transition-all"
-                  title={social.label}
+                  title={pick(lang, social.label, enSocials?.[i]?.label)}
                 >
                   <IconComponent className="w-5 h-5" />
                 </a>
@@ -681,7 +709,7 @@ ${formData.message}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest font-bold opacity-50">الاسم</label>
+                <label className="text-xs uppercase tracking-widest font-bold opacity-50">{ui(lang, "formName")}</label>
                 <input
                   type="text"
                   name="name"
@@ -692,7 +720,7 @@ ${formData.message}
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest font-bold opacity-50">البريد الإلكتروني</label>
+                <label className="text-xs uppercase tracking-widest font-bold opacity-50">{ui(lang, "formEmail")}</label>
                 <input
                   type="email"
                   name="email"
@@ -704,7 +732,7 @@ ${formData.message}
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest font-bold opacity-50">الموضوع</label>
+              <label className="text-xs uppercase tracking-widest font-bold opacity-50">{ui(lang, "formSubject")}</label>
               <input
                 type="text"
                 name="subject"
@@ -715,7 +743,7 @@ ${formData.message}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest font-bold opacity-50">الرسالة</label>
+              <label className="text-xs uppercase tracking-widest font-bold opacity-50">{ui(lang, "formMessage")}</label>
               <textarea
                 rows={4}
                 name="message"
@@ -729,7 +757,7 @@ ${formData.message}
               type="submit"
               className="w-full bg-brand-accent text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-brand-accent/20"
             >
-              إرسال الرسالة
+              {ui(lang, "formSend")}
             </button>
           </form>
         </div>
@@ -739,8 +767,10 @@ ${formData.message}
 };
 
 const VideoSection = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { videos } = content.settings;
-  const alts = ["Maraya Art Centre Promo", "عرض المسرح الأسود"];
+  const enVideos = content.settings.en?.videos;
+  const alts = lang === "en" ? ["Mraya Art Center Promo", "Black Theater Show"] : ["Maraya Art Centre Promo", "عرض المسرح الأسود"];
   return (
     <>
       {videos.map((video, index) => {
@@ -763,14 +793,14 @@ const VideoSection = ({ content }: { content: SiteContent }) => {
         );
         const text = (
           <div>
-            <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{video.kicker}</div>
-            <h2 className="text-4xl md:text-5xl font-arabic font-bold mb-8">{video.title}</h2>
-            <p className="text-lg text-brand-dark/70 leading-relaxed mb-8">{video.text}</p>
+            <div className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-4">{pick(lang, video.kicker, enVideos?.[index]?.kicker)}</div>
+            <h2 className="text-4xl md:text-5xl font-arabic font-bold mb-8">{pick(lang, video.title, enVideos?.[index]?.title)}</h2>
+            <p className="text-lg text-brand-dark/70 leading-relaxed mb-8">{pick(lang, video.text, enVideos?.[index]?.text)}</p>
             <ul className="space-y-4">
               {video.bullets.map((item, i) => (
                 <li key={i} className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-brand-accent rounded-full"></div>
-                  <span className="font-medium">{item}</span>
+                  <span className="font-medium">{pick(lang, item, enVideos?.[index]?.bullets?.[i])}</span>
                 </li>
               ))}
             </ul>
@@ -793,48 +823,50 @@ const VideoSection = ({ content }: { content: SiteContent }) => {
 
 const MapSection = ({ content }: { content: SiteContent }) => (
   <section className="w-full h-[450px] relative grayscale hover:grayscale-0 transition-all duration-1000">
-    <iframe src={content.settings.mapEmbedUrl} className="w-full h-full border-0" allowFullScreen loading="lazy" title="موقع مركز مرايا"></iframe>
+    <iframe src={content.settings.mapEmbedUrl} className="w-full h-full border-0" allowFullScreen loading="lazy" title="Mraya Center location"></iframe>
   </section>
 );
 
 const Footer = ({ content }: { content: SiteContent }) => {
+  const { lang } = useLang();
   const { footer } = content.settings;
+  const en = content.settings.en?.footer;
   return (
     <footer className="py-20 border-t border-brand-dark/10 bg-brand-warm/30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1">
-            <div className="text-4xl font-arabic font-bold tracking-tight mb-6">{footer.brand}</div>
-            <p className="text-brand-dark/60 max-w-sm leading-relaxed">{footer.about}</p>
+            <div className="text-4xl font-arabic font-bold tracking-tight mb-6">{pick(lang, footer.brand, en?.brand)}</div>
+            <p className="text-brand-dark/60 max-w-sm leading-relaxed">{pick(lang, footer.about, en?.about)}</p>
           </div>
           <div>
-            <h4 className="font-arabic font-bold uppercase tracking-widest text-sm mb-6">روابط سريعة</h4>
+            <h4 className="font-arabic font-bold uppercase tracking-widest text-sm mb-6">{ui(lang, "quickLinks")}</h4>
             <ul className="space-y-4 text-brand-dark/60">
-              <li><a href="#about" className="hover:text-brand-accent transition-colors">عن المركز</a></li>
-              <li><a href="#services" className="hover:text-brand-accent transition-colors">الخدمات</a></li>
-              <li><a href="#team" className="hover:text-brand-accent transition-colors">الفريق</a></li>
+              <li><a href="#about" className="hover:text-brand-accent transition-colors">{ui(lang, "navAbout")}</a></li>
+              <li><a href="#services" className="hover:text-brand-accent transition-colors">{ui(lang, "navServices")}</a></li>
+              <li><a href="#team" className="hover:text-brand-accent transition-colors">{ui(lang, "navTeam")}</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-arabic font-bold uppercase tracking-widest text-sm mb-6">كتالوجاتنا</h4>
+            <h4 className="font-arabic font-bold uppercase tracking-widest text-sm mb-6">{ui(lang, "ourCatalogs")}</h4>
             <ul className="space-y-4 text-brand-dark/60">
               {footer.catalogs.map((catalog, i) => (
                 <li key={i}>
                   <a href={catalog.url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 hover:text-brand-accent transition-colors">
                     <FileText className="w-4 h-4" />
-                    <span>{catalog.label}</span>
+                    <span>{pick(lang, catalog.label, en?.catalogs?.[i]?.label)}</span>
                   </a>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h4 className="font-arabic font-bold uppercase tracking-widest text-sm mb-6">تابعنا</h4>
+            <h4 className="font-arabic font-bold uppercase tracking-widest text-sm mb-6">{ui(lang, "followUs")}</h4>
             <div className="grid grid-cols-4 gap-4">
               {footer.socials.map((social, i) => {
                 const IconComponent = getIcon(social.icon);
                 return (
-                  <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="text-brand-dark/60 hover:text-brand-accent transition-colors" title={social.label}>
+                  <a key={i} href={social.url} target="_blank" rel="noopener noreferrer" className="text-brand-dark/60 hover:text-brand-accent transition-colors" title={pick(lang, social.label, en?.socials?.[i]?.label)}>
                     <IconComponent className="w-5 h-5" />
                   </a>
                 );
@@ -844,10 +876,10 @@ const Footer = ({ content }: { content: SiteContent }) => {
         </div>
         <div className="pt-10 border-t border-brand-dark/10 flex flex-col md:flex-row items-center justify-between gap-3 text-sm">
           <p className="font-arabic text-brand-dark/50">
-            © {new Date().getFullYear()} {footer.rights ?? "مرايا. جميع الحقوق محفوظة."}
+            © {new Date().getFullYear()} {pick(lang, footer.rights ?? "مرايا. جميع الحقوق محفوظة.", en?.rights)}
           </p>
           <p className="font-arabic text-brand-dark/40 text-xs">
-            {footer.credit ?? "تصميم وتطوير الموقع بواسطة Hexa Plus"}
+            {pick(lang, footer.credit ?? "تصميم وتطوير الموقع بواسطة Hexa Plus", en?.credit)}
           </p>
         </div>
       </div>
@@ -856,6 +888,14 @@ const Footer = ({ content }: { content: SiteContent }) => {
 };
 
 export default function SitePage({ content }: { content: SiteContent }) {
+  return (
+    <LangProvider>
+      <SitePageInner content={content} />
+    </LangProvider>
+  );
+}
+
+function SitePageInner({ content }: { content: SiteContent }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}

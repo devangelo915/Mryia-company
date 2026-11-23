@@ -460,6 +460,8 @@ export const DEFAULT_NEWS: NewsItem[] = [
   { id: "n7", date: "", title: "تواصل معنا", desc: "قنوات تواصل متعددة متاحة لكم طوال الوقت، لأي استفسارات أو طلبات حول خدماتنا وفعالياتنا.", img: "/img/تواصل.jpg", order: 7, titleEn: "Contact Us", descEn: "Multiple contact channels are available to you at all times for any inquiries or requests about our services and events." },
 ];
 
+DEFAULT_SETTINGS.en = DEFAULT_SETTINGS_EN;
+
 export const DEFAULT_CONTENT: SiteContent = {
   settings: DEFAULT_SETTINGS,
   stats: DEFAULT_STATS,

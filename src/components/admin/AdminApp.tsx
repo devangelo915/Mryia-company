@@ -5,6 +5,7 @@ import {
   NewsItem,
   ServiceItem,
   Settings,
+  SettingsEn,
   SiteContent,
   StatItem,
   TEAM_CATEGORIES,
@@ -28,6 +29,17 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
+function EnBlock({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="border border-dashed border-slate-300 rounded-2xl p-4 space-y-4 bg-slate-50/60">
+      <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest" dir="ltr">
+        English translation / الترجمة الإنجليزية
+      </div>
+      {children}
+    </div>
+  );
+}
+
 function TextInput({ label, value, onChange, dir }: { label: string; value: string; onChange: (v: string) => void; dir?: "ltr" }) {
   return (
     <Field label={label}>
@@ -36,10 +48,10 @@ function TextInput({ label, value, onChange, dir }: { label: string; value: stri
   );
 }
 
-function TextArea({ label, value, onChange, rows = 3 }: { label: string; value: string; onChange: (v: string) => void; rows?: number }) {
+function TextArea({ label, value, onChange, rows = 3, dir }: { label: string; value: string; onChange: (v: string) => void; rows?: number; dir?: "ltr" }) {
   return (
     <Field label={label}>
-      <textarea rows={rows} value={value} onChange={(e) => onChange(e.target.value)} className={`${inputCls} resize-y`} />
+      <textarea rows={rows} value={value} onChange={(e) => onChange(e.target.value)} className={`${inputCls} resize-y`} dir={dir} />
     </Field>
   );
 }
@@ -615,6 +627,7 @@ export default function AdminApp() {
   }
 
   const upd = (patch: Partial<Settings>) => setSettings({ ...settings, ...patch });
+  const enUpd = <K extends keyof SettingsEn>(key: K, val: SettingsEn[K]) => upd({ en: { ...(settings.en ?? {}), [key]: val } });
 
   return (
     <div className="min-h-screen bg-brand-secondary">
@@ -700,6 +713,14 @@ export default function AdminApp() {
                 dir="ltr"
               />
             </div>
+            <EnBlock>
+              <TextInput label="Title (EN)" dir="ltr" value={settings.en?.hero?.title ?? ""} onChange={(v) => enUpd("hero", { ...(settings.en?.hero ?? {}), title: v })} />
+              <TextArea label="Subtitle (EN)" dir="ltr" rows={3} value={settings.en?.hero?.subtitle ?? ""} onChange={(v) => enUpd("hero", { ...(settings.en?.hero ?? {}), subtitle: v })} />
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Primary button (EN)" dir="ltr" value={settings.en?.hero?.ctaPrimaryLabel ?? ""} onChange={(v) => enUpd("hero", { ...(settings.en?.hero ?? {}), ctaPrimaryLabel: v })} />
+                <TextInput label="Secondary button (EN)" dir="ltr" value={settings.en?.hero?.ctaSecondaryLabel ?? ""} onChange={(v) => enUpd("hero", { ...(settings.en?.hero ?? {}), ctaSecondaryLabel: v })} />
+              </div>
+            </EnBlock>
             <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
           </SectionCard>
         )}
@@ -724,6 +745,25 @@ export default function AdminApp() {
               <TextInput label="رقم الشارة (مثال: 10+)" value={settings.about.badgeValue} onChange={(v) => upd({ about: { ...settings.about, badgeValue: v } })} />
               <TextInput label="نص الشارة" value={settings.about.badgeText} onChange={(v) => upd({ about: { ...settings.about, badgeText: v } })} />
             </div>
+            <EnBlock>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Kicker (EN)" dir="ltr" value={settings.en?.about?.kicker ?? ""} onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), kicker: v })} />
+                <TextInput label="Title (EN)" dir="ltr" value={settings.en?.about?.title ?? ""} onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), title: v })} />
+              </div>
+              <TextArea
+                label="Paragraphs (EN, one per line)"
+                dir="ltr"
+                rows={8}
+                value={(settings.en?.about?.paragraphs ?? []).join("\n")}
+                onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), paragraphs: v.split("\n").filter((x) => x.trim()) })}
+              />
+              <TextInput label="Box title (EN)" dir="ltr" value={settings.en?.about?.boxTitle ?? ""} onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), boxTitle: v })} />
+              <TextArea label="Box text (EN)" dir="ltr" rows={3} value={settings.en?.about?.boxText ?? ""} onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), boxText: v })} />
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Tagline (EN)" dir="ltr" value={settings.en?.about?.tagline ?? ""} onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), tagline: v })} />
+                <TextInput label="Badge text (EN)" dir="ltr" value={settings.en?.about?.badgeText ?? ""} onChange={(v) => enUpd("about", { ...(settings.en?.about ?? {}), badgeText: v })} />
+              </div>
+            </EnBlock>
             <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
           </SectionCard>
         )}
@@ -740,6 +780,16 @@ export default function AdminApp() {
               {settings.impact.bars.map((bar, i) => (
                 <div key={i} className="grid grid-cols-[2fr_1fr_1fr_auto] gap-3 items-end border border-slate-200 rounded-xl p-3">
                   <TextInput label="الاسم" value={bar.label} onChange={(v) => upd({ impact: { ...settings.impact, bars: settings.impact.bars.map((b, j) => (j === i ? { ...b, label: v } : b)) } })} />
+                  <TextInput
+                    label="الاسم (EN)"
+                    dir="ltr"
+                    value={settings.en?.impact?.bars?.[i]?.label ?? ""}
+                    onChange={(v) => {
+                      const arr = settings.impact.bars.map((_, j) => ({ label: settings.en?.impact?.bars?.[j]?.label ?? "" }));
+                      arr[i] = { label: v };
+                      enUpd("impact", { ...(settings.en?.impact ?? {}), bars: arr });
+                    }}
+                  />
                   <NumberInput
                     label="النسبة %"
                     value={bar.value}
@@ -787,6 +837,14 @@ export default function AdminApp() {
               <TextInput label="رقم الشارة الدائرية" value={settings.impact.badgeValue} onChange={(v) => upd({ impact: { ...settings.impact, badgeValue: v } })} />
               <TextInput label="نص الشارة الدائرية" value={settings.impact.badgeText} onChange={(v) => upd({ impact: { ...settings.impact, badgeText: v } })} />
             </div>
+            <EnBlock>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Kicker (EN)" dir="ltr" value={settings.en?.impact?.kicker ?? ""} onChange={(v) => enUpd("impact", { ...(settings.en?.impact ?? {}), kicker: v })} />
+                <TextInput label="Title (EN)" dir="ltr" value={settings.en?.impact?.title ?? ""} onChange={(v) => enUpd("impact", { ...(settings.en?.impact ?? {}), title: v })} />
+              </div>
+              <TextArea label="Text (EN)" dir="ltr" rows={3} value={settings.en?.impact?.text ?? ""} onChange={(v) => enUpd("impact", { ...(settings.en?.impact ?? {}), text: v })} />
+              <TextInput label="Badge text (EN)" dir="ltr" value={settings.en?.impact?.badgeText ?? ""} onChange={(v) => enUpd("impact", { ...(settings.en?.impact ?? {}), badgeText: v })} />
+            </EnBlock>
             <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
           </SectionCard>
         )}
@@ -800,8 +858,10 @@ export default function AdminApp() {
             fields={[
               { key: "num", label: "الرقم المسلسل (01، 02...)", kind: "text", dir: "ltr" },
               { key: "title", label: "العنوان", kind: "text" },
+              { key: "titleEn", label: "العنوان (EN)", kind: "text", dir: "ltr" },
               { key: "value", label: "القيمة", kind: "text", dir: "ltr" },
               { key: "subtitle", label: "الوصف الصغير", kind: "text" },
+              { key: "subtitleEn", label: "الوصف الصغير (EN)", kind: "text", dir: "ltr" },
               { key: "icon", label: "الأيقونة", kind: "select", options: ITEM_ICON_OPTIONS },
               { key: "order", label: "الترتيب", kind: "number" },
             ]}
@@ -818,7 +878,9 @@ export default function AdminApp() {
             items={content.services}
             fields={[
               { key: "title", label: "اسم الخدمة", kind: "text" },
+              { key: "titleEn", label: "اسم الخدمة (EN)", kind: "text", dir: "ltr" },
               { key: "desc", label: "الوصف", kind: "textarea", rows: 3 },
+              { key: "descEn", label: "الوصف (EN)", kind: "textarea", rows: 3 },
               { key: "img", label: "الصورة", kind: "image" },
               { key: "icon", label: "الأيقونة", kind: "select", options: ITEM_ICON_OPTIONS },
               { key: "order", label: "الترتيب", kind: "number" },
@@ -837,8 +899,11 @@ export default function AdminApp() {
             items={content.team}
             fields={[
               { key: "name", label: "الاسم", kind: "text" },
+              { key: "nameEn", label: "الاسم (EN)", kind: "text", dir: "ltr" },
               { key: "role", label: "المسمى بالإنجليزي", kind: "text", dir: "ltr" },
+              { key: "roleEn", label: "المسمى (EN، لو مختلف)", kind: "text", dir: "ltr" },
               { key: "desc", label: "الوصف", kind: "textarea", rows: 2 },
+              { key: "descEn", label: "الوصف (EN)", kind: "textarea", rows: 2 },
               {
                 key: "category",
                 label: "القسم",
@@ -863,8 +928,10 @@ export default function AdminApp() {
             items={content.news}
             fields={[
               { key: "title", label: "العنوان", kind: "text" },
+              { key: "titleEn", label: "العنوان (EN)", kind: "text", dir: "ltr" },
               { key: "date", label: "التاريخ (اختياري، مثال: نوفمبر 2026)", kind: "text" },
               { key: "desc", label: "الوصف", kind: "textarea", rows: 3 },
+              { key: "descEn", label: "الوصف (EN)", kind: "textarea", rows: 3 },
               { key: "img", label: "الصورة", kind: "image" },
               { key: "order", label: "الترتيب", kind: "number" },
             ]}
@@ -901,6 +968,52 @@ export default function AdminApp() {
                   onChange={(v) => upd({ videos: settings.videos.map((x, j) => (j === i ? { ...x, embedUrl: v } : x)) })}
                   dir="ltr"
                 />
+                <EnBlock>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <TextInput
+                      label="Kicker (EN)"
+                      dir="ltr"
+                      value={settings.en?.videos?.[i]?.kicker ?? ""}
+                      onChange={(v) => {
+                        const arr = settings.videos.map((_, j) => ({ ...(settings.en?.videos?.[j] ?? {}) }));
+                        arr[i] = { ...arr[i], kicker: v };
+                        enUpd("videos", arr);
+                      }}
+                    />
+                    <TextInput
+                      label="Title (EN)"
+                      dir="ltr"
+                      value={settings.en?.videos?.[i]?.title ?? ""}
+                      onChange={(v) => {
+                        const arr = settings.videos.map((_, j) => ({ ...(settings.en?.videos?.[j] ?? {}) }));
+                        arr[i] = { ...arr[i], title: v };
+                        enUpd("videos", arr);
+                      }}
+                    />
+                  </div>
+                  <TextArea
+                    label="Text (EN)"
+                    dir="ltr"
+                    rows={3}
+                    value={settings.en?.videos?.[i]?.text ?? ""}
+                    onChange={(v) => {
+                      const arr = settings.videos.map((_, j) => ({ ...(settings.en?.videos?.[j] ?? {}) }));
+                      arr[i] = { ...arr[i], text: v };
+                      enUpd("videos", arr);
+                    }}
+                  />
+                  <TextArea
+                    label="Bullets (EN, one per line)"
+                    dir="ltr"
+                    rows={3}
+                    value={(settings.en?.videos?.[i]?.bullets ?? []).join("\n")}
+                    onChange={(v) => {
+                      const arr = settings.videos.map((_, j) => ({ ...(settings.en?.videos?.[j] ?? {}) }));
+                      arr[i] = { ...arr[i], bullets: v.split("\n").filter((b) => b.trim()) };
+                      enUpd("videos", arr);
+                    }}
+                  />
+                </EnBlock>
                 <button
                   type="button"
                   onClick={() => upd({ videos: settings.videos.filter((_, j) => j !== i) })}
@@ -946,6 +1059,31 @@ export default function AdminApp() {
               <TextInput label="العنوان" value={settings.newsHead.title} onChange={(v) => upd({ newsHead: { ...settings.newsHead, title: v } })} />
             </div>
             <TextInput label="النص تحت العنوان" value={settings.newsHead.text} onChange={(v) => upd({ newsHead: { ...settings.newsHead, text: v } })} />
+            <EnBlock>
+              <h3 className="font-bold text-slate-500 text-sm" dir="ltr">Production stats (EN)</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Kicker" dir="ltr" value={settings.en?.featuresHead?.kicker ?? ""} onChange={(v) => enUpd("featuresHead", { ...(settings.en?.featuresHead ?? {}), kicker: v })} />
+                <TextInput label="Title" dir="ltr" value={settings.en?.featuresHead?.title ?? ""} onChange={(v) => enUpd("featuresHead", { ...(settings.en?.featuresHead ?? {}), title: v })} />
+              </div>
+              <TextInput label="Closing quote" dir="ltr" value={settings.en?.featuresHead?.quote ?? ""} onChange={(v) => enUpd("featuresHead", { ...(settings.en?.featuresHead ?? {}), quote: v })} />
+              <h3 className="font-bold text-slate-500 text-sm" dir="ltr">Services (EN)</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Kicker" dir="ltr" value={settings.en?.servicesHead?.kicker ?? ""} onChange={(v) => enUpd("servicesHead", { ...(settings.en?.servicesHead ?? {}), kicker: v })} />
+                <TextInput label="Title" dir="ltr" value={settings.en?.servicesHead?.title ?? ""} onChange={(v) => enUpd("servicesHead", { ...(settings.en?.servicesHead ?? {}), title: v })} />
+              </div>
+              <h3 className="font-bold text-slate-500 text-sm" dir="ltr">Team (EN)</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Kicker" dir="ltr" value={settings.en?.teamHead?.kicker ?? ""} onChange={(v) => enUpd("teamHead", { ...(settings.en?.teamHead ?? {}), kicker: v })} />
+                <TextInput label="Title" dir="ltr" value={settings.en?.teamHead?.title ?? ""} onChange={(v) => enUpd("teamHead", { ...(settings.en?.teamHead ?? {}), title: v })} />
+              </div>
+              <TextInput label="Text under title" dir="ltr" value={settings.en?.teamHead?.text ?? ""} onChange={(v) => enUpd("teamHead", { ...(settings.en?.teamHead ?? {}), text: v })} />
+              <h3 className="font-bold text-slate-500 text-sm" dir="ltr">News (EN)</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Kicker" dir="ltr" value={settings.en?.newsHead?.kicker ?? ""} onChange={(v) => enUpd("newsHead", { ...(settings.en?.newsHead ?? {}), kicker: v })} />
+                <TextInput label="Title" dir="ltr" value={settings.en?.newsHead?.title ?? ""} onChange={(v) => enUpd("newsHead", { ...(settings.en?.newsHead ?? {}), title: v })} />
+              </div>
+              <TextInput label="Text under title" dir="ltr" value={settings.en?.newsHead?.text ?? ""} onChange={(v) => enUpd("newsHead", { ...(settings.en?.newsHead ?? {}), text: v })} />
+            </EnBlock>
             <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
           </SectionCard>
         )}
@@ -973,10 +1111,37 @@ export default function AdminApp() {
                 <TextInput label="ساعات العمل" value={settings.contact.hours} onChange={(v) => upd({ contact: { ...settings.contact, hours: v } })} />
               </div>
               <TextInput label="رابط خريطة جوجل (embed)" value={settings.mapEmbedUrl} onChange={(v) => upd({ mapEmbedUrl: v })} dir="ltr" />
+              <EnBlock>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <TextInput label="Section title (EN)" dir="ltr" value={settings.en?.contact?.title ?? ""} onChange={(v) => enUpd("contact", { ...(settings.en?.contact ?? {}), title: v })} />
+                  <TextInput label="Place name (EN)" dir="ltr" value={settings.en?.contact?.addressLabel ?? ""} onChange={(v) => enUpd("contact", { ...(settings.en?.contact ?? {}), addressLabel: v })} />
+                </div>
+                <TextArea label="Intro text (EN)" dir="ltr" rows={3} value={settings.en?.contact?.text ?? ""} onChange={(v) => enUpd("contact", { ...(settings.en?.contact ?? {}), text: v })} />
+                <TextArea label="Full address (EN)" dir="ltr" rows={2} value={settings.en?.contact?.addressText ?? ""} onChange={(v) => enUpd("contact", { ...(settings.en?.contact ?? {}), addressText: v })} />
+                <div className="grid md:grid-cols-2 gap-4">
+                  <TextInput label="WhatsApp button text (EN)" dir="ltr" value={settings.en?.contact?.whatsappLabel ?? ""} onChange={(v) => enUpd("contact", { ...(settings.en?.contact ?? {}), whatsappLabel: v })} />
+                  <TextInput label="Working hours (EN)" dir="ltr" value={settings.en?.contact?.hours ?? ""} onChange={(v) => enUpd("contact", { ...(settings.en?.contact ?? {}), hours: v })} />
+                </div>
+              </EnBlock>
               <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
             </SectionCard>
             <SectionCard title="روابط السوشيال ميديا (تظهر في قسم التواصل)">
               <SocialsEditor socials={settings.socials} onChange={(v) => upd({ socials: v })} />
+              <EnBlock>
+                {settings.socials.map((soc, i) => (
+                  <TextInput
+                    key={i}
+                    label={`${soc.label} (EN)`}
+                    dir="ltr"
+                    value={settings.en?.socials?.[i]?.label ?? ""}
+                    onChange={(v) => {
+                      const arr = settings.socials.map((_, j) => ({ label: settings.en?.socials?.[j]?.label ?? "" }));
+                      arr[i] = { label: v };
+                      enUpd("socials", arr);
+                    }}
+                  />
+                ))}
+              </EnBlock>
               <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
             </SectionCard>
           </>
@@ -1000,6 +1165,27 @@ export default function AdminApp() {
                 onChange={(v) => upd({ footer: { ...settings.footer, credit: v } })}
               />
             </div>
+            <EnBlock>
+              <div className="grid md:grid-cols-2 gap-4">
+                <TextInput label="Brand (EN)" dir="ltr" value={settings.en?.footer?.brand ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), brand: v })} />
+                <TextInput label="Rights line (EN, after © year)" dir="ltr" value={settings.en?.footer?.rights ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), rights: v })} />
+              </div>
+              <TextArea label="About text (EN)" dir="ltr" rows={3} value={settings.en?.footer?.about ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), about: v })} />
+              <TextInput label="Credit line (EN)" dir="ltr" value={settings.en?.footer?.credit ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), credit: v })} />
+              {settings.footer.catalogs.map((catalog, i) => (
+                <TextInput
+                  key={i}
+                  label={`${catalog.label} (EN)`}
+                  dir="ltr"
+                  value={settings.en?.footer?.catalogs?.[i]?.label ?? ""}
+                  onChange={(v) => {
+                    const arr = settings.footer.catalogs.map((_, j) => ({ label: settings.en?.footer?.catalogs?.[j]?.label ?? "" }));
+                    arr[i] = { label: v };
+                    enUpd("footer", { ...(settings.en?.footer ?? {}), catalogs: arr });
+                  }}
+                />
+              ))}
+            </EnBlock>
             <div className="space-y-3">
               <label className={labelCls}>الكتالوجات</label>
               {settings.footer.catalogs.map((catalog, i) => (
@@ -1035,6 +1221,21 @@ export default function AdminApp() {
             <div className="space-y-3">
               <label className={labelCls}>روابط تابعنا في التذييل</label>
               <SocialsEditor socials={settings.footer.socials} onChange={(v) => upd({ footer: { ...settings.footer, socials: v } })} />
+              <EnBlock>
+                {settings.footer.socials.map((soc, i) => (
+                  <TextInput
+                    key={i}
+                    label={`${soc.label} (EN)`}
+                    dir="ltr"
+                    value={settings.en?.footer?.socials?.[i]?.label ?? ""}
+                    onChange={(v) => {
+                      const arr = settings.footer.socials.map((_, j) => ({ label: settings.en?.footer?.socials?.[j]?.label ?? "" }));
+                      arr[i] = { label: v };
+                      enUpd("footer", { ...(settings.en?.footer ?? {}), socials: arr });
+                    }}
+                  />
+                ))}
+              </EnBlock>
             </div>
             <SaveButton onSave={saveSettingsSection} saving={saving} saved={saved} />
           </SectionCard>
