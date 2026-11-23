@@ -294,7 +294,7 @@ const Features = ({ content }: { content: SiteContent }) => {
           <h2 className="text-5xl md:text-6xl font-arabic font-bold text-brand-dark leading-tight">{pick(lang, featuresHead.title, en?.title)}</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {content.stats.map((stat, i) => {
             const IconComponent = getIcon(stat.icon);
             return (
@@ -304,7 +304,7 @@ const Features = ({ content }: { content: SiteContent }) => {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
                 whileHover={{ y: -12, transition: { duration: 0.3 } }}
-                className={`group relative bg-gradient-to-br ${gradients[i % 2]} rounded-3xl p-10 shadow-2xl hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 overflow-hidden cursor-pointer`}
+                className={`group relative bg-gradient-to-br ${gradients[i % 2]} rounded-2xl md:rounded-3xl p-5 md:p-10 shadow-2xl hover:shadow-2xl hover:shadow-black/20 transition-all duration-300 overflow-hidden cursor-pointer`}
               >
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl"></div>
@@ -313,20 +313,20 @@ const Features = ({ content }: { content: SiteContent }) => {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                <div className="absolute top-6 left-6 w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/30 group-hover:bg-white/30 transition-all duration-300">
-                  <span className="text-2xl font-arabic font-bold text-white">{stat.num}</span>
+                <div className="absolute top-3 left-3 md:top-6 md:left-6 w-10 h-10 md:w-16 md:h-16 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/30 group-hover:bg-white/30 transition-all duration-300">
+                  <span className="text-sm md:text-2xl font-arabic font-bold text-white">{stat.num}</span>
                 </div>
 
                 <div className="relative z-10">
-                  <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-white/30 transition-all duration-300 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
-                    <IconComponent className="w-10 h-10 text-white drop-shadow-lg" />
+                  <div className="w-12 h-12 md:w-20 md:h-20 bg-white/20 rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-8 group-hover:bg-white/30 transition-all duration-300 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
+                    <IconComponent className="w-6 h-6 md:w-10 md:h-10 text-white drop-shadow-lg" />
                   </div>
 
-                  <h3 className="text-xl font-arabic font-bold text-white mb-8 leading-relaxed">{pick(lang, stat.title, stat.titleEn)}</h3>
+                  <h3 className="text-sm md:text-xl font-arabic font-bold text-white mb-4 md:mb-8 leading-relaxed">{pick(lang, stat.title, stat.titleEn)}</h3>
 
-                  <div className="mb-6">
-                    <div className="text-5xl md:text-6xl font-arabic font-black text-white mb-2 drop-shadow-lg">{stat.value}+</div>
-                    <div className="text-sm text-white/90 font-arabic font-semibold">{pick(lang, stat.subtitle, stat.subtitleEn)}</div>
+                  <div className="mb-3 md:mb-6">
+                    <div className="text-2xl md:text-6xl font-arabic font-black text-white mb-1 md:mb-2 drop-shadow-lg">{stat.value}+</div>
+                    <div className="text-[11px] md:text-sm text-white/90 font-arabic font-semibold">{pick(lang, stat.subtitle, stat.subtitleEn)}</div>
                   </div>
 
                   <motion.div
@@ -372,7 +372,7 @@ const Services = ({ content }: { content: SiteContent }) => {
           <div className="w-24 h-1.5 bg-brand-accent mx-auto rounded-full"></div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
           {content.services.map((service, index) => {
             const IconComponent = getIcon(service.icon);
             return (
@@ -381,22 +381,22 @@ const Services = ({ content }: { content: SiteContent }) => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 group hover:-translate-y-2 transition-all duration-500"
+                className="bg-white rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 group hover:-translate-y-2 transition-all duration-500"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-32 md:h-64 overflow-hidden">
                   <img
                     src={service.img}
                     alt={pick(lang, service.title, service.titleEn)}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-6 right-6 w-14 h-14 bg-white/90 backdrop-blur-md rounded-2xl flex items-center justify-center text-brand-accent shadow-lg">
-                    <IconComponent className="w-6 h-6" />
+                  <div className="absolute top-3 right-3 md:top-6 md:right-6 w-9 h-9 md:w-14 md:h-14 bg-white/90 backdrop-blur-md rounded-xl md:rounded-2xl flex items-center justify-center text-brand-accent shadow-lg">
+                    <IconComponent className="w-4 h-4 md:w-6 md:h-6" />
                   </div>
                 </div>
-                <div className="p-10">
-                  <h3 className="text-2xl font-arabic font-bold mb-4 text-brand-dark group-hover:text-brand-accent transition-colors">{pick(lang, service.title, service.titleEn)}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm">{pick(lang, service.desc, service.descEn)}</p>
+                <div className="p-4 md:p-10">
+                  <h3 className="text-sm md:text-2xl font-arabic font-bold mb-2 md:mb-4 text-brand-dark group-hover:text-brand-accent transition-colors">{pick(lang, service.title, service.titleEn)}</h3>
+                  <p className="text-slate-500 leading-relaxed text-[11px] md:text-sm line-clamp-4 md:line-clamp-none">{pick(lang, service.desc, service.descEn)}</p>
                 </div>
               </motion.div>
             );
@@ -512,17 +512,13 @@ const News = ({ content }: { content: SiteContent }) => {
             <p className="text-slate-600 text-lg">{pick(lang, newsHead.text, en?.text)}</p>
           </motion.div>
 
-          <div
-            className="news-scroll flex overflow-x-auto gap-8 pb-6 snap-x snap-mandatory"
-            style={{ scrollBehavior: "smooth", direction: lang === "ar" ? "rtl" : "ltr", msOverflowStyle: "none", scrollbarWidth: "none" }}
-          >
-            {content.news.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex-shrink-0 w-96 group snap-center"
+          <div className="overflow-hidden pb-6" style={{ direction: "ltr" }}>
+            <div className="news-marquee-track flex gap-8 w-max">
+            {[...content.news, ...content.news].map((item, index) => (
+              <div
+                key={`${item.id}-${index}`}
+                className="flex-shrink-0 w-80 md:w-96 group"
+                dir={lang === "ar" ? "rtl" : "ltr"}
               >
                 <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-slate-100 hover:border-brand-accent/20">
                   <div className="relative h-44 overflow-hidden bg-slate-200 cursor-pointer" onClick={() => setSelectedImg(item.img)}>
@@ -553,18 +549,23 @@ const News = ({ content }: { content: SiteContent }) => {
                     </button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-slate-500 text-sm">{ui(lang, "dragHint")}</p>
+            </div>
           </div>
         </div>
 
         <style>{`
-          .news-scroll::-webkit-scrollbar {
-            display: none;
+          .news-marquee-track {
+            animation: news-marquee 45s linear infinite alternate;
+            will-change: transform;
+          }
+          .news-marquee-track:hover {
+            animation-play-state: paused;
+          }
+          @keyframes news-marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
           }
         `}</style>
       </section>
@@ -879,7 +880,7 @@ const Footer = ({ content }: { content: SiteContent }) => {
             © {new Date().getFullYear()} {pick(lang, footer.rights ?? "مرايا. جميع الحقوق محفوظة.", en?.rights)}
           </p>
           <p className="font-arabic text-brand-dark/40 text-xs">
-            {pick(lang, footer.credit ?? "تصميم وتطوير الموقع بواسطة Hexa Plus", en?.credit)}
+            {lang === "en" ? "Website Design & Development by HEXA PLUS." : "تصميم وتطوير الموقع بواسطة Hexa Plus"}
           </p>
         </div>
       </div>

@@ -449,7 +449,7 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
   };
 
   return (
-    <div className="min-h-screen bg-brand-charcoal flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-brand-charcoal flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
       {/* soft gold glow */}
       <div className="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-brand-gold/15 blur-[140px]" />
       <div className="pointer-events-none absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full bg-brand-gold/10 blur-[140px]" />
@@ -493,6 +493,9 @@ function LoginScreen({ onLoggedIn }: { onLoggedIn: () => void }) {
           </form>
         </div>
       </div>
+      <p className="relative mt-6 text-xs text-white/50 font-bold">
+        تصميم وتطوير الموقع بواسطة <span dir="ltr">HEXA PLUS</span>
+      </p>
     </div>
   );
 }
@@ -1294,25 +1297,17 @@ export default function AdminApp() {
               <TextInput label="اسم البراند" value={settings.footer.brand} onChange={(v) => upd({ footer: { ...settings.footer, brand: v } })} />
             </div>
             <TextArea label="النص التعريفي" value={settings.footer.about} onChange={(v) => upd({ footer: { ...settings.footer, about: v } })} rows={3} />
-            <div className="grid md:grid-cols-2 gap-4">
-              <TextInput
-                label="سطر الحقوق (يظهر بعد © والسنة)"
-                value={settings.footer.rights ?? "مرايا. جميع الحقوق محفوظة."}
-                onChange={(v) => upd({ footer: { ...settings.footer, rights: v } })}
-              />
-              <TextInput
-                label="سطر التصميم والتطوير"
-                value={settings.footer.credit ?? "تصميم وتطوير الموقع بواسطة Hexa Plus"}
-                onChange={(v) => upd({ footer: { ...settings.footer, credit: v } })}
-              />
-            </div>
+            <TextInput
+              label="سطر الحقوق (يظهر بعد © والسنة)"
+              value={settings.footer.rights ?? "مرايا. جميع الحقوق محفوظة."}
+              onChange={(v) => upd({ footer: { ...settings.footer, rights: v } })}
+            />
             <EnBlock>
               <div className="grid md:grid-cols-2 gap-4">
                 <TextInput label="Brand (EN)" dir="ltr" value={settings.en?.footer?.brand ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), brand: v })} />
                 <TextInput label="Rights line (EN, after © year)" dir="ltr" value={settings.en?.footer?.rights ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), rights: v })} />
               </div>
               <TextArea label="About text (EN)" dir="ltr" rows={3} value={settings.en?.footer?.about ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), about: v })} />
-              <TextInput label="Credit line (EN)" dir="ltr" value={settings.en?.footer?.credit ?? ""} onChange={(v) => enUpd("footer", { ...(settings.en?.footer ?? {}), credit: v })} />
               {settings.footer.catalogs.map((catalog, i) => (
                 <TextInput
                   key={i}
